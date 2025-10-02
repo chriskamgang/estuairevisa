@@ -1,0 +1,136 @@
+{
+    "banner":{
+
+    },
+    "visa": {
+        "content": {
+            "backgroundimage": "file",
+            "title": "text",
+            "short_description": "textarea",
+            "button_text": "text",
+            "button_text_link": "text",
+            "button_text_2": "text",
+            "button_text_2_link": "text"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "about": {
+        "content": {}
+    },
+    "destination": {
+        "content": {}
+    },
+    "how_work": {
+        "content": {}
+    },
+    "track": {
+        "content": {}
+    },
+    "airline": {
+        "element": {
+            "image":"file"
+        }
+    },
+    
+    
+    "choose": {
+        "content": {}
+    },
+    "cta": {
+        "content": {}
+    },
+    "featured": {
+        "content": {}
+    },
+    "authorized": {
+        "content": {}
+    },
+    "breadcrumb": {
+        "no_selection": true,
+        "content": {
+            "backgroundimage": "file"
+        }
+    },
+    "all_blog": {
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "faq": {
+        "content": {
+            "title": "text",
+            "subtitle": "text"
+        },
+        "element": {
+            "question": "text",
+            "answer": "textarea"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "testimonial": {
+        "content": {
+            "top_title": "text",
+            "title": "text",
+            "sub_title": "textarea"
+        },
+        "element": {
+            "image": "file",
+            "client_name": "text",
+            "review": "text",
+            "designation": "text",
+            "answer": "textarea"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "blog": {
+        "content": {
+            "top_title": "text",
+            "title": "text",
+            "sub_title": "text"
+        },
+        "element": {
+            "image": "file",
+            "title": "text",
+            "short_description": "textarea",
+            "description": "textarea_nic",
+            "tag": "text"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "contact": {
+        "content": {
+            "title": "text",
+            "location": "text",
+            "email": "text",
+            "phone": "text",
+            "map": "text",
+            "short_description": "textarea"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "footer": {
+        "no_selection": true,
+        "content": {
+            "map_image": "file",
+            "footer_short_description": "text",
+            "footer_details": "textarea_nic"
+        },
+        "element": {
+            "social_link": "text",
+            "social_icon": "icon"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    }
+}

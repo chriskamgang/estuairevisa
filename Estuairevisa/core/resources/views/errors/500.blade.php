@@ -1,0 +1,83 @@
+@extends('frontend.layout.app')
+@section('content')
+ <div class="container">
+    <div class="error">500</div>
+    <div class="message">{{__('Internal Server Error')}}</div>
+    <a href="{{route('home')}}" class="home-btn">{{__('Back To Home')}}</a>
+</div>
+@endsection
+
+@push('style')
+<style>
+    body {
+      height: 100vh;
+      background: var(--primary-two);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      overflow: hidden;
+    }
+    
+    .container {
+      text-align: center;
+      animation: fadeIn 1.5s ease-in;
+    }
+    
+    .error {
+      font-size: 10rem;
+      text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    .message {
+      font-size: 2rem;
+      margin: 20px 0;
+    }
+    
+    .home-btn {
+      padding: 12px 30px;
+      font-size: 1rem;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+      border-radius: 30px;
+      transition: background 0.3s ease;
+    }
+    
+    .home-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      }
+      to {
+        text-shadow: 0 0 40px var(--primary), 0 0 80px var(--primary);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .error {
+        font-size: 6rem;
+      }
+      .message {
+        font-size: 1.2rem;
+      }
+    }
+</style>
+@endpush

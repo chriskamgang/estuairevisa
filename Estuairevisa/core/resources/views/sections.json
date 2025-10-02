@@ -1,0 +1,113 @@
+{
+    "breadcrumb": {
+        "no_selection": true,
+        "content": {
+            "backgroundimage": "file"
+        }
+    },
+    "visa": {
+        "content": {
+            "title": "text",
+            "subtitle": "text"
+        }
+    },
+    "visa_info": {
+        "no_selection": true,
+        "content": {
+            "title": "text",
+            "subtitle": "text"
+        },
+        "element": {
+            "agreement_short_description": "text",
+            "agreement_page_slug": "text"
+        }
+    },
+    "how_work": {
+        "element": {
+            "image": "file",
+            "title": "text",
+            "short_description": "textarea"
+        }
+    },
+    "featured": {
+        "element": {
+            "image": "file",
+            "title": "text"
+        }
+    },
+    "airline": {
+        "element": {
+            "image": "file"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "faq": {
+        "element": {
+            "question": "text",
+            "answer": "textarea"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "testimonial": {
+        "element": {
+            "image": "file",
+            "client_name": "text",
+            "review": "text",
+            "designation": "text",
+            "answer": "textarea"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "blog": {
+        "element": {
+            "image": "file",
+            "title": "text",
+            "short_description": "textarea",
+            "description": "textarea_nic",
+            "tag": "text"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "contact": {
+        "content": {
+            "map": "text",
+            "location": "text",
+            "email": "text",
+            "phone": "text"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "footer": {
+        "no_selection": true,
+        "content": {
+            "footer_short_description": "text"
+        },
+        "element": {
+            "social_link": "text",
+            "social_icon": "icon"
+        },
+        "others": {
+            "icon": "far fa-square"
+        }
+    },
+    "auth_section": {
+        "no_selection": true,
+        "content": {
+            "login_title": "text",
+            "register_title": "text",
+            "forget_password_title": "text",
+            "verify_code_title": "text",
+            "reset_password_title": "text"
+        }
+    }
+}
