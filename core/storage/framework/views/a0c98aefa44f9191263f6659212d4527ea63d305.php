@@ -36,4 +36,4 @@
         </nav>
     </div>
 <?php endif; ?>
-<?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/backend/partial/paginate.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/backend/partial/paginate.blade.php ENDPATH**/ ?>

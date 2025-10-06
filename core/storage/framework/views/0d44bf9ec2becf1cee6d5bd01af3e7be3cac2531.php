@@ -106,4 +106,4 @@ $elements = element('footer.element');
   </div>
 </header>
 
-<?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/frontend/layout/header.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/frontend/layout/header.blade.php ENDPATH**/ ?>

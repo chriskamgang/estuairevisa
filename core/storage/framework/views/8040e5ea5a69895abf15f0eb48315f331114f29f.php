@@ -55,4 +55,4 @@
         })();
     </script>
 <?php endif; ?>
-<?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/vendor/cookieConsent/index.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/vendor/cookieConsent/index.blade.php ENDPATH**/ ?>

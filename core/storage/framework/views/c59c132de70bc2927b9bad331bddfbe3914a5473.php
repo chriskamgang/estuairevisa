@@ -83,4 +83,4 @@ $chunks = $elements->split(2);
     });
 });
 </script>
-<?php $__env->stopPush(); ?><?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/backend/frontend/not_editable/airline.blade.php ENDPATH**/ ?>
+<?php $__env->stopPush(); ?><?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/backend/frontend/not_editable/airline.blade.php ENDPATH**/ ?>

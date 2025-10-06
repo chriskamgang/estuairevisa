@@ -20,4 +20,4 @@
         </button>
     </div>
 </div>
-<?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/vendor/cookieConsent/dialogContents.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/vendor/cookieConsent/dialogContents.blade.php ENDPATH**/ ?>

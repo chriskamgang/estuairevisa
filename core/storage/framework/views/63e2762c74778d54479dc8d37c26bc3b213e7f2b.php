@@ -94,4 +94,4 @@ $footersociallink = element('footer.element');
     </div>
   </div>
   <?php endif; ?>
-</footer><?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/frontend/layout/footer.blade.php ENDPATH**/ ?>
+</footer><?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/frontend/layout/footer.blade.php ENDPATH**/ ?>

@@ -16,4 +16,4 @@ $elements = element('how_work.element');
         </div>
     </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-</div><?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/backend/frontend/not_editable/how_work.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/backend/frontend/not_editable/how_work.blade.php ENDPATH**/ ?>

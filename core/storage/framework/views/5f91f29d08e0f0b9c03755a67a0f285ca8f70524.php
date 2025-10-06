@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('frontend_content'); ?>
     <?php
         $breadcrumb = content('breadcrumb.content');
@@ -35,4 +34,4 @@
 
 
 
-<?php echo $__env->make('frontend.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/frontend/home.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('frontend.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/frontend/home.blade.php ENDPATH**/ ?>

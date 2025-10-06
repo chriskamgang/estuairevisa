@@ -36,4 +36,4 @@
 
     </div>
 </section>
-<?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/backend/frontend/not_editable/all_blog.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/backend/frontend/not_editable/all_blog.blade.php ENDPATH**/ ?>

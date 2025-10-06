@@ -19,4 +19,4 @@
         <button class="btn btn-primary w-100" type="submit"><?php echo e(__('Send Message')); ?></button>
     </div>
 </form>
-<?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/backend/frontend/not_editable/contact.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/backend/frontend/not_editable/contact.blade.php ENDPATH**/ ?>

@@ -49,4 +49,4 @@
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     });
 </script>
-<?php endif; ?><?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/frontend/notify.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/frontend/notify.blade.php ENDPATH**/ ?>

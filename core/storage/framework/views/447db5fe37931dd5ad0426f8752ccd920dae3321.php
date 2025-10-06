@@ -186,4 +186,4 @@
         })
   </script>
 </body>
-</html><?php /**PATH /Users/redwolf-dark/Documents/Estuaire/IMMIGRATION/Estuairevisa/core/resources/views/frontend/layout/app.blade.php ENDPATH**/ ?>
+</html><?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/frontend/layout/app.blade.php ENDPATH**/ ?>
