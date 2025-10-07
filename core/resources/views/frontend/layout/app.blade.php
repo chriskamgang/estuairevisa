@@ -7,6 +7,20 @@
     <meta name='description' content="{{ $general->seo_description }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:title" content="{{ $general->sitename ?? 'Immigration de l\'Estuaire' }}">
+    <meta property="og:description" content="{{ $general->seo_description ?? 'Obtenez votre visa rapidement pour plus de 15 destinations. Service professionnel avec taux d\'approbation de 98%. Traitement en 48-72 heures.' }}">
+    <meta property="og:image" content="{{ getFile('logo', $general->white_logo) }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url('/') }}">
+    <meta property="twitter:title" content="{{ $general->sitename ?? 'Immigration de l\'Estuaire' }}">
+    <meta property="twitter:description" content="{{ $general->seo_description ?? 'Obtenez votre visa rapidement pour plus de 15 destinations. Service professionnel avec taux d\'approbation de 98%. Traitement en 48-72 heures.' }}">
+    <meta property="twitter:image" content="{{ getFile('logo', $general->white_logo) }}">
+
     <link rel="shortcut icon" type="image/png" href="{{ getFile('icon', $general->favicon) }}">
 
     <title>
