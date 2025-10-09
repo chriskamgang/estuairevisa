@@ -177,4 +177,42 @@ class UserController extends Controller
         $user = getUserWithChildren($parent->id);
         return view('frontend.user.referral',compact('user'));
     }
+
+    /**
+     * Save FCM token for push notifications
+     */
+    public function saveFCMToken(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string'
+        ]);
+
+        try {
+            $user = auth()->user();
+            $user->fcm_token = $request->token;
+            $user->push_notification_enabled = 1;
+            $user->save();
+
+            \Log::info('FCM token saved successfully', [
+                'user_id' => $user->id,
+                'token' => substr($request->token, 0, 20) . '...'
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Notifications activées avec succès!'
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Error saving FCM token', [
+                'error' => $e->getMessage(),
+                'user_id' => auth()->id()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'error' => 'Erreur lors de l\'activation des notifications'
+            ], 500);
+        }
+    }
 }

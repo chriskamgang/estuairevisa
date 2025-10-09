@@ -1,586 +1,662 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Documentation Complète - Estuairevisa</title>
     <style>
-        @media print {
-            @page {
-                size: A4;
-                margin: 2cm;
-            }
-            .page-break {
-                page-break-before: always;
-            }
-            .no-print {
-                display: none;
-            }
+      @media print {
+        @page {
+          size: A4;
+          margin: 2cm;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .page-break {
+          page-break-before: always;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
+        .no-print {
+          display: none;
         }
+      }
 
-        .container {
-            background: white;
-            padding: 40px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        .cover {
-            text-align: center;
-            padding: 100px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            margin: -40px -40px 40px -40px;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
 
-        .cover h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
+      .container {
+        background: white;
+        padding: 40px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
 
-        .cover p {
-            font-size: 20px;
-            opacity: 0.9;
-        }
+      .cover {
+        text-align: center;
+        padding: 100px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        margin: -40px -40px 40px -40px;
+      }
 
-        h1 {
-            color: #667eea;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            margin: 40px 0 20px 0;
-            font-size: 32px;
-        }
+      .cover h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
 
-        h2 {
-            color: #764ba2;
-            margin: 30px 0 15px 0;
-            font-size: 26px;
-        }
+      .cover p {
+        font-size: 20px;
+        opacity: 0.9;
+      }
 
-        h3 {
-            color: #555;
-            margin: 20px 0 10px 0;
-            font-size: 20px;
-        }
+      h1 {
+        color: #667eea;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 10px;
+        margin: 40px 0 20px 0;
+        font-size: 32px;
+      }
 
-        h4 {
-            color: #666;
-            margin: 15px 0 10px 0;
-            font-size: 18px;
-        }
+      h2 {
+        color: #764ba2;
+        margin: 30px 0 15px 0;
+        font-size: 26px;
+      }
 
-        p {
-            margin: 10px 0;
-            text-align: justify;
-        }
+      h3 {
+        color: #555;
+        margin: 20px 0 10px 0;
+        font-size: 20px;
+      }
 
-        ul, ol {
-            margin: 10px 0 10px 30px;
-        }
+      h4 {
+        color: #666;
+        margin: 15px 0 10px 0;
+        font-size: 18px;
+      }
 
-        li {
-            margin: 5px 0;
-        }
+      p {
+        margin: 10px 0;
+        text-align: justify;
+      }
 
-        code {
-            background: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
+      ul,
+      ol {
+        margin: 10px 0 10px 30px;
+      }
 
-        pre {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 20px;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            line-height: 1.4;
-        }
+      li {
+        margin: 5px 0;
+      }
 
-        .diagram {
-            background: #f8f9fa;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.4;
-            overflow-x: auto;
-        }
+      code {
+        background: #f4f4f4;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "Courier New", monospace;
+        color: #e83e8c;
+      }
 
-        .box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 20px;
+        border-radius: 5px;
+        overflow-x: auto;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        line-height: 1.4;
+      }
 
-        .success {
-            background: #e8f5e9;
-            border-left-color: #4caf50;
-        }
+      .diagram {
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        line-height: 1.4;
+        overflow-x: auto;
+      }
 
-        .warning {
-            background: #fff3e0;
-            border-left-color: #ff9800;
-        }
+      .box {
+        background: #e7f3ff;
+        border-left: 4px solid #2196f3;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
 
-        .danger {
-            background: #ffebee;
-            border-left-color: #f44336;
-        }
+      .success {
+        background: #e8f5e9;
+        border-left-color: #4caf50;
+      }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
+      .warning {
+        background: #fff3e0;
+        border-left-color: #ff9800;
+      }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
+      .danger {
+        background: #ffebee;
+        border-left-color: #f44336;
+      }
 
-        th {
-            background: #667eea;
-            color: white;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
 
-        tr:nth-child(even) {
-            background: #f9f9f9;
-        }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+      }
 
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-right: 5px;
-        }
+      th {
+        background: #667eea;
+        color: white;
+      }
 
-        .badge-success { background: #4caf50; color: white; }
-        .badge-warning { background: #ff9800; color: white; }
-        .badge-danger { background: #f44336; color: white; }
-        .badge-info { background: #2196F3; color: white; }
+      tr:nth-child(even) {
+        background: #f9f9f9;
+      }
 
-        .toc {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
-        }
+      .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-right: 5px;
+      }
 
-        .toc h2 {
-            margin-top: 0;
-        }
+      .badge-success {
+        background: #4caf50;
+        color: white;
+      }
+      .badge-warning {
+        background: #ff9800;
+        color: white;
+      }
+      .badge-danger {
+        background: #f44336;
+        color: white;
+      }
+      .badge-info {
+        background: #2196f3;
+        color: white;
+      }
 
-        .toc ul {
-            list-style: none;
-            margin-left: 0;
-        }
+      .toc {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 30px 0;
+      }
 
-        .toc a {
-            color: #667eea;
-            text-decoration: none;
-        }
+      .toc h2 {
+        margin-top: 0;
+      }
 
-        .toc a:hover {
-            text-decoration: underline;
-        }
+      .toc ul {
+        list-style: none;
+        margin-left: 0;
+      }
 
-        .print-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
+      .toc a {
+        color: #667eea;
+        text-decoration: none;
+      }
 
-        .print-button:hover {
-            background: #764ba2;
-        }
+      .toc a:hover {
+        text-decoration: underline;
+      }
 
-        .emoji {
-            font-size: 1.2em;
-        }
+      .print-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      }
 
-        .footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            border-top: 2px solid #eee;
-            color: #666;
-            font-size: 14px;
-        }
+      .print-button:hover {
+        background: #764ba2;
+      }
+
+      .emoji {
+        font-size: 1.2em;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+        border-top: 2px solid #eee;
+        color: #666;
+        font-size: 14px;
+      }
     </style>
-</head>
-<body>
-    <button class="print-button no-print" onclick="window.print()">🖨️ Imprimer / Sauvegarder en PDF</button>
+  </head>
+  <body>
+    <button class="print-button no-print" onclick="window.print()">
+      🖨️ Imprimer / Sauvegarder en PDF
+    </button>
 
     <div class="container">
-        <div class="cover">
-            <h1>📚 DOCUMENTATION COMPLÈTE</h1>
-            <p>ESTUAIREVISA</p>
-            <p style="margin-top: 20px;">Système de gestion de demandes de visa en ligne</p>
-            <p style="font-size: 16px; margin-top: 30px;">Laravel 8.x | PHP 8.2+ | MySQL</p>
-            <p style="font-size: 14px; margin-top: 10px;">Version 1.0.0 - Octobre 2025</p>
-        </div>
+      <div class="cover">
+        <h1>📚 DOCUMENTATION COMPLÈTE</h1>
+        <p>ESTUAIREVISA</p>
+        <p style="margin-top: 20px">
+          Système de gestion de demandes de visa en ligne
+        </p>
+        <p style="font-size: 16px; margin-top: 30px">
+          Laravel 8.x | PHP 8.2+ | MySQL
+        </p>
+        <p style="font-size: 14px; margin-top: 10px">
+          Version 1.0.0 - Octobre 2025
+        </p>
+      </div>
 
-        <div class="toc">
-            <h2>📑 Table des matières</h2>
-            <ul>
-                <li><a href="#vue-ensemble">1. Vue d'ensemble</a></li>
-                <li><a href="#structure">2. Structure du projet</a></li>
-                <li><a href="#architecture">3. Architecture technique</a></li>
-                <li><a href="#composants">4. Composants principaux</a></li>
-                <li><a href="#flux">5. Flux de données</a></li>
-                <li><a href="#installation">6. Installation</a></li>
-                <li><a href="#developpement">7. Guide du développeur</a></li>
-                <li><a href="#diagrammes">8. Diagrammes</a></li>
-            </ul>
-        </div>
-
-        <div class="page-break"></div>
-
-        <h1 id="vue-ensemble">🎯 1. VUE D'ENSEMBLE</h1>
-
-        <h2>Qu'est-ce qu'Estuairevisa ?</h2>
-        <p>Estuairevisa est une plateforme web complète permettant de gérer des demandes de visa en ligne. Elle offre une interface utilisateur intuitive et un panel d'administration complet pour traiter les demandes.</p>
-
-        <div class="box success">
-            <h3>✅ Fonctionnalités principales</h3>
-            <ul>
-                <li><strong>Pour les utilisateurs :</strong> Recherche de visa, soumission de documents, paiement en ligne, suivi de demande</li>
-                <li><strong>Pour les administrateurs :</strong> Gestion des demandes, configuration des pays/plans, statistiques, gestion du contenu</li>
-            </ul>
-        </div>
-
-        <h2>Technologies utilisées</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Composant</th>
-                    <th>Technologie</th>
-                    <th>Version</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Framework Backend</td><td>Laravel</td><td>8.65+</td></tr>
-                <tr><td>Langage</td><td>PHP</td><td>8.2+</td></tr>
-                <tr><td>Base de données</td><td>MySQL</td><td>5.7+ / 8.0+</td></tr>
-                <tr><td>Frontend</td><td>Bootstrap</td><td>5.x</td></tr>
-                <tr><td>Build Tool</td><td>Laravel Mix</td><td>6.x</td></tr>
-                <tr><td>Authentification</td><td>Laravel Sanctum</td><td>2.11+</td></tr>
-            </tbody>
-        </table>
-
-        <div class="page-break"></div>
-
-        <h1 id="structure">📂 2. STRUCTURE DU PROJET</h1>
-
-        <h2>Organisation des dossiers</h2>
-
-        <div class="diagram">
-/Estuairevisa/
-│
-├── 📄 index.php                    # Point d'entrée principal
-├── 📄 .htaccess                    # Configuration Apache
-├── 📄 DOCUMENTATION.md             # Documentation texte
-├── 📄 GUIDE-VISUEL.md              # Diagrammes et schémas
-├── 📄 CLAUDE.md                    # Guide technique
-│
-├── 📁 asset/                       # Assets statiques
-│   ├── 📁 admin/                   # CSS/JS panel admin
-│   ├── 📁 frontend/                # CSS/JS site public
-│   └── 📁 images/                  # Images uploadées
-│
-├── 📁 core/                        # Application Laravel
-│   ├── 📁 app/                     # Code métier
-│   ├── 📁 resources/               # Vues, langues
-│   ├── 📁 routes/                  # Définition des routes
-│   ├── 📁 database/                # Seeders
-│   ├── 📁 config/                  # Configuration
-│   └── 📄 .env                     # Variables d'environnement
-│
-└── 📁 install/                     # Installation wizard
-    └── 📄 database.sql             # Schéma BD
-        </div>
-
-        <div class="box warning">
-            <h3>⚠️ Note importante sur la structure</h3>
-            <p>Cette application utilise une structure <strong>non-standard</strong> avec Laravel dans le dossier <code>/core/</code> au lieu de la racine. Cela complique le déploiement mais fonctionne correctement une fois configuré.</p>
-        </div>
-
-        <h2>Détail du dossier core/app/</h2>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Dossier</th>
-                    <th>Contenu</th>
-                    <th>Nombre de fichiers</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Models/</td><td>Modèles Eloquent</td><td>25 models</td></tr>
-                <tr><td>Http/Controllers/</td><td>Logique métier</td><td>~40 controllers</td></tr>
-                <tr><td>Http/Middleware/</td><td>Middlewares custom</td><td>5 middlewares</td></tr>
-                <tr><td>Providers/</td><td>Service Providers</td><td>4 providers</td></tr>
-            </tbody>
-        </table>
-
-        <div class="page-break"></div>
-
-        <h1 id="architecture">🏗️ 3. ARCHITECTURE TECHNIQUE</h1>
-
-        <h2>Architecture MVC</h2>
-
-        <div class="diagram">
-┌─────────────────────────────────────────────────────────┐
-│                    NAVIGATEUR                           │
-│            (http://estuairevisa.com)                    │
-└─────────────────────┬───────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────┐
-│              SERVEUR WEB (Apache)                       │
-│         DocumentRoot: /Estuairevisa/                    │
-└─────────────────────┬───────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────┐
-│              POINT D'ENTRÉE                             │
-│               /index.php                                │
-│                    ↓                                    │
-│      require '/core/bootstrap/app.php'                  │
-└─────────────────────┬───────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────┐
-│              LARAVEL KERNEL                             │
-│         /core/app/Http/Kernel.php                       │
-│                    ↓                                    │
-│          Charge les Middlewares                         │
-└─────────────────────┬───────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────┐
-│                 ROUTING                                 │
-│          /core/routes/web.php                           │
-└─────────────────────┬───────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────┐
-│               CONTROLLER                                │
-│         Logique métier                                  │
-└─────────────────────┬───────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────┐
-│                 MODEL                                   │
-│         Eloquent ORM                                    │
-└─────────────────────┬───────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────┐
-│                  VIEW                                   │
-│         Template Blade                                  │
-└─────────────────────────────────────────────────────────┘
-        </div>
-
-        <h2>Système de routes</h2>
-
-        <p>Le fichier <code>/core/routes/web.php</code> contient <strong>420+ lignes</strong> de définitions de routes organisées en groupes :</p>
-
+      <div class="toc">
+        <h2>📑 Table des matières</h2>
         <ul>
-            <li><span class="badge badge-info">Frontend</span> Routes publiques accessibles à tous</li>
-            <li><span class="badge badge-warning">Admin</span> Routes protégées pour les administrateurs</li>
-            <li><span class="badge badge-success">User</span> Routes pour les utilisateurs authentifiés</li>
+          <li><a href="#vue-ensemble">1. Vue d'ensemble</a></li>
+          <li><a href="#structure">2. Structure du projet</a></li>
+          <li><a href="#architecture">3. Architecture technique</a></li>
+          <li><a href="#composants">4. Composants principaux</a></li>
+          <li><a href="#flux">5. Flux de données</a></li>
+          <li><a href="#installation">6. Installation</a></li>
+          <li><a href="#developpement">7. Guide du développeur</a></li>
+          <li><a href="#diagrammes">8. Diagrammes</a></li>
         </ul>
+      </div>
 
-        <div class="page-break"></div>
+      <div class="page-break"></div>
 
-        <h1 id="composants">🧩 4. COMPOSANTS PRINCIPAUX</h1>
+      <h1 id="vue-ensemble">🎯 1. VUE D'ENSEMBLE</h1>
 
-        <h2>4.1 Système de Visa</h2>
+      <h2>Qu'est-ce qu'Estuairevisa ?</h2>
+      <p>
+        Estuairevisa est une plateforme web complète permettant de gérer des
+        demandes de visa en ligne. Elle offre une interface utilisateur
+        intuitive et un panel d'administration complet pour traiter les
+        demandes.
+      </p>
 
-        <h3>Modèles impliqués</h3>
+      <div class="box success">
+        <h3>✅ Fonctionnalités principales</h3>
         <ul>
-            <li><strong>Country</strong> : Liste des pays disponibles</li>
-            <li><strong>Plan</strong> : Plans tarifaires par pays (Single/Multiple Entry)</li>
-            <li><strong>VisaFileField</strong> : Champs requis pour chaque type de visa</li>
-            <li><strong>Checkout</strong> : Panier de demandes</li>
-            <li><strong>CheckoutLog</strong> : Historique des statuts</li>
+          <li>
+            <strong>Pour les utilisateurs :</strong> Recherche de visa,
+            soumission de documents, paiement en ligne, suivi de demande
+          </li>
+          <li>
+            <strong>Pour les administrateurs :</strong> Gestion des demandes,
+            configuration des pays/plans, statistiques, gestion du contenu
+          </li>
         </ul>
+      </div>
 
-        <h3>Flux de demande de visa</h3>
+      <h2>Technologies utilisées</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Composant</th>
+            <th>Technologie</th>
+            <th>Version</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Framework Backend</td>
+            <td>Laravel</td>
+            <td>8.65+</td>
+          </tr>
+          <tr>
+            <td>Langage</td>
+            <td>PHP</td>
+            <td>8.2+</td>
+          </tr>
+          <tr>
+            <td>Base de données</td>
+            <td>MySQL</td>
+            <td>5.7+ / 8.0+</td>
+          </tr>
+          <tr>
+            <td>Frontend</td>
+            <td>Bootstrap</td>
+            <td>5.x</td>
+          </tr>
+          <tr>
+            <td>Build Tool</td>
+            <td>Laravel Mix</td>
+            <td>6.x</td>
+          </tr>
+          <tr>
+            <td>Authentification</td>
+            <td>Laravel Sanctum</td>
+            <td>2.11+</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <div class="diagram">
-1. USER: Sélectionne pays départ + destination
-   → GET /visa/applay/start/{planId}
+      <div class="page-break"></div>
 
-2. USER: Remplit informations personnelles
-   → POST /visa/applay/info/submit
+      <h1 id="structure">📂 2. STRUCTURE DU PROJET</h1>
 
-3. USER: Upload documents requis
-   → POST /visa/applay/documents
+      <h2>Organisation des dossiers</h2>
 
-4. USER: Vérifie panier
-   → GET /visa/applay/checkout
+      <div class="diagram">
+        /Estuairevisa/ │ ├── 📄 index.php # Point d'entrée principal ├── 📄
+        .htaccess # Configuration Apache ├── 📄 DOCUMENTATION.md # Documentation
+        texte ├── 📄 GUIDE-VISUEL.md # Diagrammes et schémas ├── 📄 CLAUDE.md #
+        Guide technique │ ├── 📁 asset/ # Assets statiques │ ├── 📁 admin/ #
+        CSS/JS panel admin │ ├── 📁 frontend/ # CSS/JS site public │ └── 📁
+        images/ # Images uploadées │ ├── 📁 core/ # Application Laravel │ ├── 📁
+        app/ # Code métier │ ├── 📁 resources/ # Vues, langues │ ├── 📁 routes/
+        # Définition des routes │ ├── 📁 database/ # Seeders │ ├── 📁 config/ #
+        Configuration │ └── 📄 .env # Variables d'environnement │ └── 📁
+        install/ # Installation wizard └── 📄 database.sql # Schéma BD
+      </div>
 
-5. USER: Effectue paiement
-   → POST /user/paynow/{gatewayId}
+      <div class="box warning">
+        <h3>⚠️ Note importante sur la structure</h3>
+        <p>
+          Cette application utilise une structure
+          <strong>non-standard</strong> avec Laravel dans le dossier
+          <code>/core/</code> au lieu de la racine. Cela complique le
+          déploiement mais fonctionne correctement une fois configuré.
+        </p>
+      </div>
 
-6. GATEWAY: Callback
-   → Crée Checkout + CheckoutLog (status: processing)
+      <h2>Détail du dossier core/app/</h2>
 
-7. ADMIN: Traite la demande
-   → POST /admin/visa/status/change/{id}
-   → Change status: approved/rejected/canceled
+      <table>
+        <thead>
+          <tr>
+            <th>Dossier</th>
+            <th>Contenu</th>
+            <th>Nombre de fichiers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Models/</td>
+            <td>Modèles Eloquent</td>
+            <td>25 models</td>
+          </tr>
+          <tr>
+            <td>Http/Controllers/</td>
+            <td>Logique métier</td>
+            <td>~40 controllers</td>
+          </tr>
+          <tr>
+            <td>Http/Middleware/</td>
+            <td>Middlewares custom</td>
+            <td>5 middlewares</td>
+          </tr>
+          <tr>
+            <td>Providers/</td>
+            <td>Service Providers</td>
+            <td>4 providers</td>
+          </tr>
+        </tbody>
+      </table>
 
-8. USER: Reçoit notification
-   → Email + notification dashboard
-        </div>
+      <div class="page-break"></div>
 
-        <h2>4.2 Système de Paiement</h2>
+      <h1 id="architecture">🏗️ 3. ARCHITECTURE TECHNIQUE</h1>
 
-        <div class="box">
-            <h3>15+ Passerelles de paiement supportées</h3>
-            <ul>
-                <li><strong>Stripe</strong> - Cartes bancaires (Mondial)</li>
-                <li><strong>PayPal</strong> - Compte PayPal (Mondial)</li>
-                <li><strong>Razorpay</strong> - UPI, Cartes (Inde)</li>
-                <li><strong>Mollie</strong> - iDEAL, Bancontact (Europe)</li>
-                <li><strong>Paystack</strong> - Mobile money (Afrique)</li>
-                <li><strong>Flutterwave</strong> - Cartes, Mobile (Afrique)</li>
-                <li><strong>Coinpayments</strong> - Crypto (BTC, ETH...)</li>
-                <li>Et 8+ autres gateways...</li>
-            </ul>
-        </div>
+      <h2>Architecture MVC</h2>
 
-        <h2>4.3 Authentification & Sécurité</h2>
+      <div class="diagram">
+        ┌─────────────────────────────────────────────────────────┐ │ NAVIGATEUR
+        │ │ (http://estuairevisa.com) │
+        └─────────────────────┬───────────────────────────────────┘ ↓
+        ┌─────────────────────────────────────────────────────────┐ │ SERVEUR
+        WEB (Apache) │ │ DocumentRoot: /Estuairevisa/ │
+        └─────────────────────┬───────────────────────────────────┘ ↓
+        ┌─────────────────────────────────────────────────────────┐ │ POINT
+        D'ENTRÉE │ │ /index.php │ │ ↓ │ │ require '/core/bootstrap/app.php' │
+        └─────────────────────┬───────────────────────────────────┘ ↓
+        ┌─────────────────────────────────────────────────────────┐ │ LARAVEL
+        KERNEL │ │ /core/app/Http/Kernel.php │ │ ↓ │ │ Charge les Middlewares │
+        └─────────────────────┬───────────────────────────────────┘ ↓
+        ┌─────────────────────────────────────────────────────────┐ │ ROUTING │
+        │ /core/routes/web.php │
+        └─────────────────────┬───────────────────────────────────┘ ↓
+        ┌─────────────────────────────────────────────────────────┐ │ CONTROLLER
+        │ │ Logique métier │
+        └─────────────────────┬───────────────────────────────────┘ ↓
+        ┌─────────────────────────────────────────────────────────┐ │ MODEL │ │
+        Eloquent ORM │
+        └─────────────────────┬───────────────────────────────────┘ ↓
+        ┌─────────────────────────────────────────────────────────┐ │ VIEW │ │
+        Template Blade │
+        └─────────────────────────────────────────────────────────┘
+      </div>
 
-        <h3>Systèmes d'authentification</h3>
-        <ol>
-            <li><strong>Multi-guard Laravel</strong>
-                <ul>
-                    <li><code>web</code> guard : Utilisateurs</li>
-                    <li><code>admin</code> guard : Administrateurs</li>
-                </ul>
-            </li>
-            <li><strong>OAuth Social Login</strong>
-                <ul>
-                    <li>Google OAuth 2.0</li>
-                    <li>Facebook Login</li>
-                </ul>
-            </li>
-            <li><strong>Two-Factor Authentication (2FA)</strong>
-                <ul>
-                    <li>Via Google Authenticator</li>
-                    <li>Middleware : <code>Google2fa</code></li>
-                </ul>
-            </li>
-        </ol>
+      <h2>Système de routes</h2>
 
-        <h3>Middlewares de sécurité</h3>
+      <p>
+        Le fichier <code>/core/routes/web.php</code> contient
+        <strong>420+ lignes</strong> de définitions de routes organisées en
+        groupes :
+      </p>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Middleware</th>
-                    <th>Fonction</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td><code>Admin</code></td><td>Vérifie que l'utilisateur est administrateur</td></tr>
-                <tr><td><code>Inactive</code></td><td>Bloque les comptes désactivés</td></tr>
-                <tr><td><code>Demo</code></td><td>Limite les actions en mode démo</td></tr>
-                <tr><td><code>IsEmailVerified</code></td><td>Force la vérification de l'email</td></tr>
-                <tr><td><code>Google2fa</code></td><td>Vérifie le code 2FA</td></tr>
-            </tbody>
-        </table>
+      <ul>
+        <li>
+          <span class="badge badge-info">Frontend</span> Routes publiques
+          accessibles à tous
+        </li>
+        <li>
+          <span class="badge badge-warning">Admin</span> Routes protégées pour
+          les administrateurs
+        </li>
+        <li>
+          <span class="badge badge-success">User</span> Routes pour les
+          utilisateurs authentifiés
+        </li>
+      </ul>
 
-        <div class="page-break"></div>
+      <div class="page-break"></div>
 
-        <h1 id="flux">🔄 5. FLUX DE DONNÉES</h1>
+      <h1 id="composants">🧩 4. COMPOSANTS PRINCIPAUX</h1>
 
-        <h2>Cycle de vie d'une demande de visa</h2>
+      <h2>4.1 Système de Visa</h2>
 
-        <div class="diagram">
-┌──────────────┐
-│   NOUVEAU    │ (User remplit formulaire)
-└──────┬───────┘
-       ↓
-┌──────────────┐
-│  PROCESSING  │ (Paiement effectué, en attente)
-└──────┬───────┘
-       ↓
-    ┌──┴──┐
-    ↓     ↓
-┌────────┐ ┌────────┐
-│APPROVED│ │REJECTED│ (Admin décide)
-└────────┘ └────────┘
-        </div>
+      <h3>Modèles impliqués</h3>
+      <ul>
+        <li><strong>Country</strong> : Liste des pays disponibles</li>
+        <li>
+          <strong>Plan</strong> : Plans tarifaires par pays (Single/Multiple
+          Entry)
+        </li>
+        <li>
+          <strong>VisaFileField</strong> : Champs requis pour chaque type de
+          visa
+        </li>
+        <li><strong>Checkout</strong> : Panier de demandes</li>
+        <li><strong>CheckoutLog</strong> : Historique des statuts</li>
+      </ul>
 
-        <h2>États possibles</h2>
+      <h3>Flux de demande de visa</h3>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Status</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>0</td><td><span class="badge badge-warning">Processing</span></td><td>En cours de traitement</td></tr>
-                <tr><td>1</td><td><span class="badge badge-success">Approved</span></td><td>Demande approuvée</td></tr>
-                <tr><td>2</td><td><span class="badge badge-danger">Rejected</span></td><td>Demande rejetée</td></tr>
-                <tr><td>3</td><td><span class="badge badge-info">Canceled</span></td><td>Annulée</td></tr>
-            </tbody>
-        </table>
+      <div class="diagram">
+        1. USER: Sélectionne pays départ + destination → GET
+        /visa/applay/start/{planId} 2. USER: Remplit informations personnelles →
+        POST /visa/applay/info/submit 3. USER: Upload documents requis → POST
+        /visa/applay/documents 4. USER: Vérifie panier → GET
+        /visa/applay/checkout 5. USER: Effectue paiement → POST
+        /user/paynow/{gatewayId} 6. GATEWAY: Callback → Crée Checkout +
+        CheckoutLog (status: processing) 7. ADMIN: Traite la demande → POST
+        /admin/visa/status/change/{id} → Change status:
+        approved/rejected/canceled 8. USER: Reçoit notification → Email +
+        notification dashboard
+      </div>
 
-        <div class="page-break"></div>
+      <h2>4.2 Système de Paiement</h2>
 
-        <h1 id="installation">⚙️ 6. INSTALLATION</h1>
-
-        <h2>Prérequis</h2>
+      <div class="box">
+        <h3>15+ Passerelles de paiement supportées</h3>
         <ul>
-            <li>PHP 8.2 ou supérieur</li>
-            <li>MySQL 5.7+ ou 8.0+</li>
-            <li>Composer</li>
-            <li>Node.js & npm</li>
-            <li>Apache ou Nginx</li>
+          <li><strong>Stripe</strong> - Cartes bancaires (Mondial)</li>
+          <li><strong>PayPal</strong> - Compte PayPal (Mondial)</li>
+          <li><strong>Razorpay</strong> - UPI, Cartes (Inde)</li>
+          <li><strong>Mollie</strong> - iDEAL, Bancontact (Europe)</li>
+          <li><strong>Paystack</strong> - Mobile money (Afrique)</li>
+          <li><strong>Flutterwave</strong> - Cartes, Mobile (Afrique)</li>
+          <li><strong>Coinpayments</strong> - Crypto (BTC, ETH...)</li>
+          <li>Et 8+ autres gateways...</li>
         </ul>
+      </div>
 
-        <h2>Étapes d'installation</h2>
+      <h2>4.3 Authentification & Sécurité</h2>
 
-        <h3>1. Configuration base de données</h3>
-        <pre>
+      <h3>Systèmes d'authentification</h3>
+      <ol>
+        <li>
+          <strong>Multi-guard Laravel</strong>
+          <ul>
+            <li><code>web</code> guard : Utilisateurs</li>
+            <li><code>admin</code> guard : Administrateurs</li>
+          </ul>
+        </li>
+        <li>
+          <strong>OAuth Social Login</strong>
+          <ul>
+            <li>Google OAuth 2.0</li>
+            <li>Facebook Login</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Two-Factor Authentication (2FA)</strong>
+          <ul>
+            <li>Via Google Authenticator</li>
+            <li>Middleware : <code>Google2fa</code></li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3>Middlewares de sécurité</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Middleware</th>
+            <th>Fonction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Admin</code></td>
+            <td>Vérifie que l'utilisateur est administrateur</td>
+          </tr>
+          <tr>
+            <td><code>Inactive</code></td>
+            <td>Bloque les comptes désactivés</td>
+          </tr>
+          <tr>
+            <td><code>Demo</code></td>
+            <td>Limite les actions en mode démo</td>
+          </tr>
+          <tr>
+            <td><code>IsEmailVerified</code></td>
+            <td>Force la vérification de l'email</td>
+          </tr>
+          <tr>
+            <td><code>Google2fa</code></td>
+            <td>Vérifie le code 2FA</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="page-break"></div>
+
+      <h1 id="flux">🔄 5. FLUX DE DONNÉES</h1>
+
+      <h2>Cycle de vie d'une demande de visa</h2>
+
+      <div class="diagram">
+        ┌──────────────┐ │ NOUVEAU │ (User remplit formulaire) └──────┬───────┘
+        ↓ ┌──────────────┐ │ PROCESSING │ (Paiement effectué, en attente)
+        └──────┬───────┘ ↓ ┌──┴──┐ ↓ ↓ ┌────────┐ ┌────────┐ │APPROVED│
+        │REJECTED│ (Admin décide) └────────┘ └────────┘
+      </div>
+
+      <h2>États possibles</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td><span class="badge badge-warning">Processing</span></td>
+            <td>En cours de traitement</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td><span class="badge badge-success">Approved</span></td>
+            <td>Demande approuvée</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><span class="badge badge-danger">Rejected</span></td>
+            <td>Demande rejetée</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><span class="badge badge-info">Canceled</span></td>
+            <td>Annulée</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="page-break"></div>
+
+      <h1 id="installation">⚙️ 6. INSTALLATION</h1>
+
+      <h2>Prérequis</h2>
+      <ul>
+        <li>PHP 8.2 ou supérieur</li>
+        <li>MySQL 5.7+ ou 8.0+</li>
+        <li>Composer</li>
+        <li>Node.js & npm</li>
+        <li>Apache ou Nginx</li>
+      </ul>
+
+      <h2>Étapes d'installation</h2>
+
+      <h3>1. Configuration base de données</h3>
+      <pre>
 # Fichier: core/.env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -588,56 +664,62 @@ DB_PORT=3306
 DB_DATABASE=immigo
 DB_USERNAME=root
 DB_PASSWORD=
-        </pre>
+        </pre
+      >
 
-        <h3>2. Import du schéma</h3>
-        <pre>
+      <h3>2. Import du schéma</h3>
+      <pre>
 mysql -u root -p immigo < install/lib/database.sql
-        </pre>
+        </pre
+      >
 
-        <h3>3. Installation des dépendances</h3>
-        <pre>
+      <h3>3. Installation des dépendances</h3>
+      <pre>
 # PHP dependencies
 cd core/
 composer install
 
 # Node dependencies
 npm install
-        </pre>
+        </pre
+      >
 
-        <h3>4. Compilation des assets</h3>
-        <pre>
+      <h3>4. Compilation des assets</h3>
+      <pre>
 npm run dev   # Développement
 npm run prod  # Production
-        </pre>
+        </pre
+      >
 
-        <h3>5. Créer fichier "installed"</h3>
-        <pre>
+      <h3>5. Créer fichier "installed"</h3>
+      <pre>
 touch install/installed
-        </pre>
+        </pre
+      >
 
-        <h3>6. Lancer le serveur</h3>
-        <pre>
+      <h3>6. Lancer le serveur</h3>
+      <pre>
 php -S 127.0.0.1:8000
-        </pre>
+        </pre
+      >
 
-        <div class="box success">
-            <h3>✅ Accès à l'application</h3>
-            <ul>
-                <li><strong>Frontend :</strong> http://127.0.0.1:8000</li>
-                <li><strong>Admin Panel :</strong> http://127.0.0.1:8000/admin</li>
-                <li><strong>Email :</strong> admin@gmail.com</li>
-                <li><strong>Mot de passe :</strong> admin</li>
-            </ul>
-        </div>
+      <div class="box success">
+        <h3>✅ Accès à l'application</h3>
+        <ul>
+          <li><strong>Frontend :</strong> http://127.0.0.1:8000</li>
+          <li><strong>Admin Panel :</strong> http://127.0.0.1:8000/admin</li>
+          <li><strong>Email :</strong> admin@gmail.com</li>
+          <li><strong>Mot de passe :</strong> admin</li>
+        </ul>
+      </div>
 
-        <div class="page-break"></div>
+      <div class="page-break"></div>
 
-        <h1 id="developpement">👨‍💻 7. GUIDE DU DÉVELOPPEUR</h1>
+      <h1 id="developpement">👨‍💻 7. GUIDE DU DÉVELOPPEUR</h1>
 
-        <h2>Commandes utiles</h2>
+      <h2>Commandes utiles</h2>
 
-        <pre>
+      <pre>
 # Artisan
 php artisan list                    # Liste des commandes
 php artisan cache:clear             # Nettoyer cache
@@ -651,18 +733,20 @@ composer dump-autoload              # Regénérer autoload
 # npm
 npm run watch                       # Watch changements
 npm run hot                         # Hot reload (dev)
-        </pre>
+        </pre
+      >
 
-        <h2>Créer un nouveau controller</h2>
+      <h2>Créer un nouveau controller</h2>
 
-        <pre>
+      <pre>
 cd core/
 php artisan make:controller MonController
-        </pre>
+        </pre
+      >
 
-        <h2>Structure d'un controller typique</h2>
+      <h2>Structure d'un controller typique</h2>
 
-        <pre>
+      <pre>
 &lt;?php
 
 namespace App\Http\Controllers;
@@ -690,158 +774,121 @@ class MonController extends Controller
             ->with('success', 'Enregistré !');
     }
 }
-        </pre>
+        </pre
+      >
 
-        <h2>Helpers disponibles</h2>
+      <h2>Helpers disponibles</h2>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Fonction</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td><code>selectedLanguage()</code></td><td>Retourne la langue active</td></tr>
-                <tr><td><code>uploadImage($file, $path)</code></td><td>Upload et redimensionne une image</td></tr>
-                <tr><td><code>makeDirectory($path)</code></td><td>Crée un dossier</td></tr>
-                <tr><td><code>removeFile($path)</code></td><td>Supprime un fichier</td></tr>
-                <tr><td><code>replaceBaseUrl($content)</code></td><td>Remplace {base_url} dans le contenu</td></tr>
-            </tbody>
-        </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Fonction</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>selectedLanguage()</code></td>
+            <td>Retourne la langue active</td>
+          </tr>
+          <tr>
+            <td><code>uploadImage($file, $path)</code></td>
+            <td>Upload et redimensionne une image</td>
+          </tr>
+          <tr>
+            <td><code>makeDirectory($path)</code></td>
+            <td>Crée un dossier</td>
+          </tr>
+          <tr>
+            <td><code>removeFile($path)</code></td>
+            <td>Supprime un fichier</td>
+          </tr>
+          <tr>
+            <td><code>replaceBaseUrl($content)</code></td>
+            <td>Remplace {base_url} dans le contenu</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <div class="page-break"></div>
+      <div class="page-break"></div>
 
-        <h1 id="diagrammes">📊 8. DIAGRAMMES</h1>
+      <h1 id="diagrammes">📊 8. DIAGRAMMES</h1>
 
-        <h2>Relations entre modèles</h2>
+      <h2>Relations entre modèles</h2>
 
-        <div class="diagram">
-┌─────────────────────────────────────────────────────────┐
-│              SYSTÈME DE VISA                            │
-└─────────────────────────────────────────────────────────┘
+      <div class="diagram">
+        ┌─────────────────────────────────────────────────────────┐ │ SYSTÈME DE
+        VISA │ └─────────────────────────────────────────────────────────┘
+        ┌──────────┐ ┌──────────┐ │ Country │──────────▶│ Plan │ └──────────┘
+        has many └──────────┘ │ │ │ │ │ has many │ has many ▼ ▼ ┌────────────┐
+        ┌──────────────┐ │VisaFileField│ │ Checkout │ └────────────┘
+        └──────────────┘ (Champs requis) (Demandes) │ │ belongs to ▼
+        ┌──────────┐ │ User │ └──────────┘
+        ┌─────────────────────────────────────────────────────────┐ │ SYSTÈME DE
+        PAIEMENT │ └─────────────────────────────────────────────────────────┘
+        ┌──────────┐ ┌──────────┐ │ Checkout │─────────▶│ Payment │ └──────────┘
+        creates └──────────┘ │ │ │ │ uses ▼ ▼ ┌──────────────┐ ┌──────────────┐
+        │ CheckoutLog │ │ Gateway │ └──────────────┘ └──────────────┘
+        (Historique) (Stripe, PayPal...)
+      </div>
 
-     ┌──────────┐           ┌──────────┐
-     │ Country  │──────────▶│   Plan   │
-     └──────────┘  has many └──────────┘
-         │                       │
-         │                       │
-         │ has many              │ has many
-         ▼                       ▼
-  ┌────────────┐         ┌──────────────┐
-  │VisaFileField│         │  Checkout    │
-  └────────────┘         └──────────────┘
-  (Champs requis)        (Demandes)
-                               │
-                               │ belongs to
-                               ▼
-                          ┌──────────┐
-                          │   User   │
-                          └──────────┘
+      <h2>Middlewares en cascade</h2>
 
+      <div class="diagram">
+        Requête HTTP ↓ ┌─────────────────────────┐ │ CSRF Protection │
+        └───────────┬─────────────┘ ↓ ┌─────────────────────────┐ │ Rate
+        Limiting │ └───────────┬─────────────┘ ↓ ┌─────────────────────────┐ │
+        Auth Check │ └───────────┬─────────────┘ ↓ ┌─────────────────────────┐ │
+        Email Verified │ └───────────┬─────────────┘ ↓
+        ┌─────────────────────────┐ │ Account Active │
+        └───────────┬─────────────┘ ↓ ┌─────────────────────────┐ │ 2FA Check │
+        └───────────┬─────────────┘ ↓ ┌─────────────────────────┐ │ Admin Check
+        │ └───────────┬─────────────┘ ↓ CONTROLLER
+      </div>
 
-┌─────────────────────────────────────────────────────────┐
-│            SYSTÈME DE PAIEMENT                          │
-└─────────────────────────────────────────────────────────┘
+      <div class="page-break"></div>
 
-  ┌──────────┐          ┌──────────┐
-  │ Checkout │─────────▶│ Payment  │
-  └──────────┘  creates └──────────┘
-       │                      │
-       │                      │ uses
-       ▼                      ▼
-  ┌──────────────┐      ┌──────────────┐
-  │ CheckoutLog  │      │   Gateway    │
-  └──────────────┘      └──────────────┘
-  (Historique)          (Stripe, PayPal...)
-        </div>
+      <h2>Points d'intégration externes</h2>
 
-        <h2>Middlewares en cascade</h2>
+      <div class="diagram">
+        ┌──────────────────────────────────────────────────────┐ │ INTÉGRATIONS
+        TIERCES │ └──────────────────────────────────────────────────────┘ 🔐
+        OAuth (Socialite) ├─ Google OAuth 2.0 └─ Facebook OAuth 📧 Email (SMTP)
+        ├─ PHPMailer └─ Templates personnalisables 💳 Payment Gateways (15+) ├─
+        Stripe API ├─ PayPal SDK ├─ Razorpay ├─ Mollie └─ Crypto (Coinpayments,
+        Nowpayments) 🔔 Notifications ├─ Base de données └─ Email 📊 Analytics
+        └─ Google Analytics 🔐 2FA └─ Google Authenticator
+      </div>
 
-        <div class="diagram">
-Requête HTTP
-    ↓
-┌─────────────────────────┐
-│   CSRF Protection       │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│   Rate Limiting         │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│   Auth Check            │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│   Email Verified        │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│   Account Active        │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│   2FA Check             │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│   Admin Check           │
-└───────────┬─────────────┘
-            ↓
-     CONTROLLER
-        </div>
-
-        <div class="page-break"></div>
-
-        <h2>Points d'intégration externes</h2>
-
-        <div class="diagram">
-┌──────────────────────────────────────────────────────┐
-│          INTÉGRATIONS TIERCES                        │
-└──────────────────────────────────────────────────────┘
-
-🔐 OAuth (Socialite)
-├─ Google OAuth 2.0
-└─ Facebook OAuth
-
-📧 Email (SMTP)
-├─ PHPMailer
-└─ Templates personnalisables
-
-💳 Payment Gateways (15+)
-├─ Stripe API
-├─ PayPal SDK
-├─ Razorpay
-├─ Mollie
-└─ Crypto (Coinpayments, Nowpayments)
-
-🔔 Notifications
-├─ Base de données
-└─ Email
-
-📊 Analytics
-└─ Google Analytics
-
-🔐 2FA
-└─ Google Authenticator
-        </div>
-
-        <div class="footer">
-            <p><strong>Document créé le :</strong> 2 Octobre 2025</p>
-            <p><strong>Version du projet :</strong> 1.0.0</p>
-            <p><strong>Auteur de la documentation :</strong> Claude AI (Anthropic)</p>
-            <hr style="margin: 20px 0;">
-            <p style="font-size: 12px; color: #999;">
-                Cette documentation est générée à partir des fichiers Markdown du projet.<br>
-                Pour imprimer en PDF : Ctrl+P (Windows) ou Cmd+P (Mac) → Choisir "Enregistrer au format PDF"
-            </p>
-        </div>
+      <div class="footer">
+        <p><strong>Document créé le :</strong> 2 Octobre 2025</p>
+        <p><strong>Version du projet :</strong> 1.0.0</p>
+        <p>
+          <strong>Auteur de la documentation :</strong> Claude AI (Anthropic)
+        </p>
+        <hr style="margin: 20px 0" />
+        <p style="font-size: 12px; color: #999">
+          Cette documentation est générée à partir des fichiers Markdown du
+          projet.<br />
+          Pour imprimer en PDF : Ctrl+P (Windows) ou Cmd+P (Mac) → Choisir
+          "Enregistrer au format PDF"
+        </p>
+      </div>
     </div>
 
     <script>
-        // Auto-print au chargement (optionnel - décommenter si désiré)
-        // window.onload = function() { window.print(); }
+      // Auto-print au chargement (optionnel - décommenter si désiré)
+      // window.onload = function() { window.print(); }
     </script>
-</body>
+  </body>
 </html>
+📊 FLUX COMPLET DANS L'APPLICATION 1. CLIENT choisit Mobile Money (Orange/MTN) ↓
+2. CLIENT entre son numéro de téléphone (237XXXXXXXXX) ↓ 3. BACKEND appelle POST
+/api/v2/payment ↓ 4. FREEMOPAY retourne {reference, status: CREATED} ↓ 5.
+BACKEND stocke en DB : transaction_id, reference, status=PENDING ↓ 6. FRONTEND
+affiche : "Composez *126# (Orange) ou *150# (MTN) pour valider" ↓ 7. CLIENT
+valide le paiement sur son téléphone ↓ 8. FREEMOPAY envoie webhook à
+/webhook/freemopay ↓ 9. BACKEND reçoit {status: SUCCESS, reference, externalId}
+↓ 10. BACKEND met à jour DB : status=SUCCESS, payment_status=1 ↓ 11. BACKEND
+envoie email de confirmation au client ↓ 12. BACKEND redirige vers user.visa.all
+avec message "Paiement réussi!"

@@ -485,3 +485,110 @@ function sendWhatsApp($phoneNumber, $message)
         return ['success' => false, 'error' => $e->getMessage()];
     }
 }
+
+/**
+ * Send Firebase Cloud Messaging (FCM) push notification
+ *
+ * @param mixed $user User object or user ID
+ * @param string $title Notification title
+ * @param string $body Notification body/message
+ * @param array $data Additional data to send with notification
+ * @param string|null $url URL to open when notification is clicked
+ * @return array
+ */
+function sendFCMNotification($user, $title, $body, $data = [], $url = null)
+{
+    try {
+        // Get user object if ID is provided
+        if (is_numeric($user)) {
+            $user = \App\Models\User::find($user);
+        }
+
+        // Check if user exists and has FCM token
+        if (!$user || !$user->fcm_token || !$user->push_notification_enabled) {
+            \Illuminate\Support\Facades\Log::info('FCM notification skipped', [
+                'user_id' => $user->id ?? null,
+                'reason' => !$user ? 'User not found' : (!$user->fcm_token ? 'No FCM token' : 'Notifications disabled')
+            ]);
+            return ['success' => false, 'error' => 'User not configured for push notifications'];
+        }
+
+        // Get Firebase server key from config
+        $serverKey = config('firebase.server_key');
+
+        if (!$serverKey) {
+            \Illuminate\Support\Facades\Log::error('Firebase server key not configured');
+            return ['success' => false, 'error' => 'Firebase not configured'];
+        }
+
+        // Prepare FCM endpoint
+        $url = $url ?? url('/');
+
+        // Prepare notification payload
+        $notification = [
+            'title' => $title,
+            'body' => $body,
+            'icon' => url('/asset/images/logo/logo.png'),
+            'badge' => url('/asset/images/logo/icon.png'),
+            'click_action' => $url,
+            'tag' => 'estuairevisa-' . time()
+        ];
+
+        // Prepare data payload
+        $dataPayload = array_merge([
+            'url' => $url,
+            'timestamp' => now()->toIso8601String()
+        ], $data);
+
+        // FCM message structure
+        $fcmMessage = [
+            'to' => $user->fcm_token,
+            'notification' => $notification,
+            'data' => $dataPayload,
+            'priority' => 'high',
+            'content_available' => true
+        ];
+
+        // Send FCM request
+        $response = \Illuminate\Support\Facades\Http::withHeaders([
+            'Authorization' => 'key=' . $serverKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://fcm.googleapis.com/fcm/send', $fcmMessage);
+
+        if ($response->successful()) {
+            $result = $response->json();
+
+            \Illuminate\Support\Facades\Log::info('FCM notification sent successfully', [
+                'user_id' => $user->id,
+                'title' => $title,
+                'message_id' => $result['results'][0]['message_id'] ?? null
+            ]);
+
+            return [
+                'success' => true,
+                'message_id' => $result['results'][0]['message_id'] ?? null,
+                'data' => $result
+            ];
+        } else {
+            \Illuminate\Support\Facades\Log::error('FCM notification failed', [
+                'user_id' => $user->id,
+                'status' => $response->status(),
+                'error' => $response->body()
+            ]);
+
+            return [
+                'success' => false,
+                'error' => $response->body()
+            ];
+        }
+
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('Exception sending FCM notification', [
+            'user_id' => $user->id ?? null,
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}

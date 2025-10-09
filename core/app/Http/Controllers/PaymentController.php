@@ -384,6 +384,18 @@ class PaymentController extends Controller
                 sendWhatsApp($phone, $whatsappMessage);
             }
 
+            // Envoyer notification push FCM
+            $fcmTitle = "🎉 Paiement Confirmé!";
+            $fcmBody = "Votre paiement de {$deposit->final_amount} {$general->site_currency} a été confirmé. {$checkout->total_visa} demande(s) de visa en cours de traitement.";
+            $fcmUrl = route('user.dashboard');
+
+            sendFCMNotification($user, $fcmTitle, $fcmBody, [
+                'type' => 'payment_confirmed',
+                'amount' => $deposit->final_amount,
+                'currency' => $general->site_currency,
+                'visa_count' => $checkout->total_visa
+            ], $fcmUrl);
+
             DB::commit();
 
             referMoney($checkout->user, $totalAmount);

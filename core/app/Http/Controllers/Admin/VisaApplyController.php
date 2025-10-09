@@ -186,6 +186,19 @@ class VisaApplyController extends Controller
             $whatsappMessage .= "Merci de votre confiance! 🙏";
 
             sendWhatsApp($phone, $whatsappMessage);
+
+            // Envoyer notification push FCM
+            $fcmTitle = "📋 Mise à jour de votre visa";
+            $fcmBody = "Statut: {$statusLabel} - {$checkout->plan->title}";
+            $fcmUrl = route('visa.track', ['order_number' => $checkout->order_number]);
+
+            sendFCMNotification($user, $fcmTitle, $fcmBody, [
+                'type' => 'visa_status_changed',
+                'order_number' => $checkout->order_number,
+                'status' => $checkout->status,
+                'status_label' => $statusLabel,
+                'plan' => $checkout->plan->title
+            ], $fcmUrl);
         }
 
         return back()->with('success', 'Status changed successfully completed');

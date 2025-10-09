@@ -7,6 +7,30 @@
     <meta name='description' content="<?php echo e($general->seo_description); ?>">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
+    <!-- Open Graph / Facebook / WhatsApp / LinkedIn / Telegram -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo e(url('/')); ?>">
+    <meta property="og:title" content="<?php echo e($general->sitename ?? 'Immigration de l\'Estuaire'); ?>">
+    <meta property="og:description" content="<?php echo e($general->seo_description ?? 'Obtenez votre visa rapidement pour plus de 15 destinations. Service professionnel avec taux d\'approbation de 98%. Traitement en 48-72 heures.'); ?>">
+    <meta property="og:image" content="<?php echo e(url('asset/images/logo/logo.png')); ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:site_name" content="<?php echo e($general->sitename ?? 'Immigration de l\'Estuaire'); ?>">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="<?php echo e(url('/')); ?>">
+    <meta name="twitter:title" content="<?php echo e($general->sitename ?? 'Immigration de l\'Estuaire'); ?>">
+    <meta name="twitter:description" content="<?php echo e($general->seo_description ?? 'Obtenez votre visa rapidement pour plus de 15 destinations. Service professionnel avec taux d\'approbation de 98%. Traitement en 48-72 heures.'); ?>">
+    <meta name="twitter:image" content="<?php echo e(url('asset/images/logo/logo.png')); ?>">
+
+    <!-- Additional Meta Tags for better social sharing -->
+    <meta name="author" content="<?php echo e($general->sitename ?? 'Immigration de l\'Estuaire'); ?>">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="<?php echo e(url('/')); ?>">
+
     <link rel="shortcut icon" type="image/png" href="<?php echo e(getFile('icon', $general->favicon)); ?>">
 
     <title>

@@ -57,6 +57,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Push Notifications Card -->
+    <div class="col-lg-4 col-12">
+        <div class="nir-user-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <span class="icon"><i class="bi bi-bell"></i></span>
+            <div class="content">
+                <p class="mb-2 text-white">{{__("Notifications Push")}}</p>
+                @if(auth()->user()->push_notification_enabled)
+                    <span class="badge bg-success">
+                        <i class="bi bi-check-circle"></i> {{__("Activées")}}
+                    </span>
+                @else
+                    <button id="enable-notifications-btn" class="btn btn-sm btn-light mt-2">
+                        <i class="bi bi-bell-fill"></i> {{__("Activer")}}
+                    </button>
+                @endif
+            </div>
+        </div>
+    </div>
+
     <div class="col-lg-4 col-6">
         <div class="nir-user-card style-pending">
             <span class="icon"><i class="bi bi-hourglass-split"></i></span>
@@ -242,5 +262,52 @@
         });
 
     });
+
+    // Push Notifications Activation
+    @if(!auth()->user()->push_notification_enabled)
+    document.getElementById('enable-notifications-btn').addEventListener('click', async function() {
+        const btn = this;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Activation...';
+
+        try {
+            // Request notification permission
+            const result = await window.requestNotificationPermission();
+
+            if (result.success) {
+                // Success - reload page to update UI
+                iziToast.success({
+                    title: 'Succès',
+                    message: 'Notifications push activées avec succès!',
+                    position: 'topRight'
+                });
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            } else {
+                // Error
+                iziToast.error({
+                    title: 'Erreur',
+                    message: result.error || 'Impossible d\'activer les notifications',
+                    position: 'topRight'
+                });
+
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-bell-fill"></i> Activer';
+            }
+        } catch (error) {
+            console.error('Error enabling notifications:', error);
+            iziToast.error({
+                title: 'Erreur',
+                message: 'Une erreur est survenue',
+                position: 'topRight'
+            });
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-bell-fill"></i> Activer';
+        }
+    });
+    @endif
 </script>
 @endpush

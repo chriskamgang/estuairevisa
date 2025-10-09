@@ -314,6 +314,9 @@
                 Route::get('profile/change/password', [UserController::class, 'changePassword'])->name('change.password');
                 Route::post('profile/change/password', [UserController::class, 'updatePassword'])->name('update.password');
 
+                // Firebase Push Notifications
+                Route::post('save-fcm-token', [UserController::class, 'saveFCMToken'])->name('save.fcm.token');
+
                 Route::resource('ticket', TicketController::class);
                 Route::post('ticket/reply', [TicketController::class, 'reply'])->name('ticket.reply');
                 Route::get('ticket/reply/status/change/{id}', [TicketController::class, 'statusChange'])->name('ticket.status-change');
