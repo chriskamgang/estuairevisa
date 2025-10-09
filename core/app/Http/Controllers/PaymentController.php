@@ -389,6 +389,9 @@ class PaymentController extends Controller
             referMoney($checkout->user, $totalAmount);
 
             session()->forget('checkout_data');
+
+            // Supprimer aussi checkout_data de la base de données
+            $deposit->checkout_data = null;
         }
 
         $deposit->payment_status = 1;
