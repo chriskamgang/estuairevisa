@@ -11,6 +11,7 @@ use App\Models\Gateway;
 use App\Models\GeneralSetting;
 use App\Models\Payment;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Notifications\AdminNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
