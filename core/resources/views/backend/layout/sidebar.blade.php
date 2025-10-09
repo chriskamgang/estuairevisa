@@ -127,40 +127,13 @@
                     <li class="{{ $subNavPaypalPaymentActiveClass ?? '' }}">
                         <a class="nav-link" href="{{ route('admin.payment.paypal') }}">{{ __('Paypal') }}</a>
                     </li>
-                    <li class="{{ $subNavStripePaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.stripe') }}">{{ __('Stripe') }}</a>
-                    </li>
-                    <li class="{{ $subNavCoinpaymentsPaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.coin') }}">{{ __('Coinpayments') }}</a>
+
+                    <li class="{{ $subNavOrangeMoneyPaymentActiveClass ?? '' }}">
+                        <a class="nav-link" href="{{ route('admin.payment.orangemoney') }}">{{ __('Orange Money') }}</a>
                     </li>
 
-                    <li class="{{ $subNavRazorpayPaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.razorpay') }}">{{ __('Razorpay') }}</a>
-                    </li>
-
-                    <li class="{{ $subNavVougePayPaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.vougepay') }}">{{ __('VougePay') }}</a>
-                    </li>
-
-                    <li class="{{ $subNavMolliePaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.mollie') }}">{{ __('Mollie') }}</a>
-                    </li>
-
-                    <li class="{{ $subNavNowPaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.nowpay') }}">{{ __('NowPayments') }}</a>
-                    </li>
-
-                    <li class="{{ $subNavFlutterPaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.fullerwave') }}">{{ __('Flutterwave') }}</a>
-                    </li>
-
-                    <li class="{{ $subNavPayStackPaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.paystack') }}">{{ __('PayStack') }}</a>
-                    </li>
-
-
-                    <li class="{{ $subNavPayStackPaymentActiveClass ?? '' }}">
-                        <a class="nav-link" href="{{ route('admin.payment.paghiper') }}">{{ __('PagHiper') }}</a>
+                    <li class="{{ $subNavMtnMoneyPaymentActiveClass ?? '' }}">
+                        <a class="nav-link" href="{{ route('admin.payment.mtnmoney') }}">{{ __('MTN Mobile Money') }}</a>
                     </li>
                 </ul>
             </li>
