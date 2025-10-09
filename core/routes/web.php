@@ -278,7 +278,7 @@
             Route::post('reset/password', [AuthForgotPasswordController::class, 'resetPassword']);
 
             Route::get('verify/email', [AuthLoginController::class, 'emailVerify'])->name('email.verify');
-            Route::post('verify/email', [AuthLoginController::class, 'emailVerifyConfirm'])->name('email.verify');
+            Route::post('verify/email', [AuthLoginController::class, 'emailVerifyConfirm'])->name('email.verify.confirm');
         });
 
         Route::middleware(['auth', 'inactive', 'is_email_verified'])->group(function () {
