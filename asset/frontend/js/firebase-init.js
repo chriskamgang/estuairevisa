@@ -62,6 +62,10 @@ window.requestNotificationPermission = async function() {
         const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
         console.log('Service Worker registered:', registration);
 
+        // Wait for service worker to be ready
+        await navigator.serviceWorker.ready;
+        console.log('Service Worker is ready');
+
         // Get FCM token
         const token = await getToken(messaging, {
             vapidKey: vapidKey,
