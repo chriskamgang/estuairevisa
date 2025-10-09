@@ -28,4 +28,7 @@ return [
 
     // Server Key for backend push notifications (legacy)
     'server_key' => env('FIREBASE_SERVER_KEY', ''),
+
+    // Service Account credentials file path for FCM V1 API
+    'credentials' => storage_path('app/firebase/firebase-credentials.json'),
 ];

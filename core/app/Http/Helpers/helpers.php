@@ -487,7 +487,7 @@ function sendWhatsApp($phoneNumber, $message)
 }
 
 /**
- * Send Firebase Cloud Messaging (FCM) push notification
+ * Send Firebase Cloud Messaging (FCM) push notification using V1 API
  *
  * @param mixed $user User object or user ID
  * @param string $title Notification title
@@ -513,47 +513,59 @@ function sendFCMNotification($user, $title, $body, $data = [], $url = null)
             return ['success' => false, 'error' => 'User not configured for push notifications'];
         }
 
-        // Get Firebase server key from config
-        $serverKey = config('firebase.server_key');
+        // Get credentials file path
+        $credentialsPath = config('firebase.credentials');
 
-        if (!$serverKey) {
-            \Illuminate\Support\Facades\Log::error('Firebase server key not configured');
-            return ['success' => false, 'error' => 'Firebase not configured'];
+        if (!file_exists($credentialsPath)) {
+            \Illuminate\Support\Facades\Log::error('Firebase credentials file not found', ['path' => $credentialsPath]);
+            return ['success' => false, 'error' => 'Firebase credentials not configured'];
+        }
+
+        // Load service account credentials
+        $credentials = json_decode(file_get_contents($credentialsPath), true);
+
+        // Get OAuth 2.0 access token
+        $accessToken = getFirebaseAccessToken($credentials);
+
+        if (!$accessToken) {
+            \Illuminate\Support\Facades\Log::error('Failed to get Firebase access token');
+            return ['success' => false, 'error' => 'Failed to authenticate with Firebase'];
         }
 
         // Prepare FCM endpoint
-        $url = $url ?? url('/');
+        $clickUrl = $url ?? url('/');
+        $projectId = config('firebase.project_id');
 
-        // Prepare notification payload
-        $notification = [
-            'title' => $title,
-            'body' => $body,
-            'icon' => url('/asset/images/logo/logo.png'),
-            'badge' => url('/asset/images/logo/icon.png'),
-            'click_action' => $url,
-            'tag' => 'estuairevisa-' . time()
+        // Prepare notification payload (FCM V1 format)
+        $message = [
+            'message' => [
+                'token' => $user->fcm_token,
+                'notification' => [
+                    'title' => $title,
+                    'body' => $body,
+                ],
+                'webpush' => [
+                    'notification' => [
+                        'icon' => url('/asset/images/logo/logo.png'),
+                        'badge' => url('/asset/images/logo/icon.png'),
+                        'tag' => 'estuairevisa-' . time(),
+                    ],
+                    'fcm_options' => [
+                        'link' => $clickUrl
+                    ]
+                ],
+                'data' => array_merge([
+                    'url' => $clickUrl,
+                    'timestamp' => now()->toIso8601String()
+                ], $data),
+            ]
         ];
 
-        // Prepare data payload
-        $dataPayload = array_merge([
-            'url' => $url,
-            'timestamp' => now()->toIso8601String()
-        ], $data);
-
-        // FCM message structure
-        $fcmMessage = [
-            'to' => $user->fcm_token,
-            'notification' => $notification,
-            'data' => $dataPayload,
-            'priority' => 'high',
-            'content_available' => true
-        ];
-
-        // Send FCM request
+        // Send FCM request using V1 API
         $response = \Illuminate\Support\Facades\Http::withHeaders([
-            'Authorization' => 'key=' . $serverKey,
+            'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
-        ])->post('https://fcm.googleapis.com/fcm/send', $fcmMessage);
+        ])->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", $message);
 
         if ($response->successful()) {
             $result = $response->json();
@@ -561,12 +573,12 @@ function sendFCMNotification($user, $title, $body, $data = [], $url = null)
             \Illuminate\Support\Facades\Log::info('FCM notification sent successfully', [
                 'user_id' => $user->id,
                 'title' => $title,
-                'message_id' => $result['results'][0]['message_id'] ?? null
+                'message_name' => $result['name'] ?? null
             ]);
 
             return [
                 'success' => true,
-                'message_id' => $result['results'][0]['message_id'] ?? null,
+                'message_name' => $result['name'] ?? null,
                 'data' => $result
             ];
         } else {
@@ -590,5 +602,70 @@ function sendFCMNotification($user, $title, $body, $data = [], $url = null)
         ]);
 
         return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+/**
+ * Get Firebase OAuth 2.0 access token using service account
+ *
+ * @param array $credentials Service account credentials
+ * @return string|null
+ */
+function getFirebaseAccessToken($credentials)
+{
+    try {
+        // JWT Header
+        $header = [
+            'alg' => 'RS256',
+            'typ' => 'JWT'
+        ];
+
+        // JWT Payload
+        $now = time();
+        $payload = [
+            'iss' => $credentials['client_email'],
+            'scope' => 'https://www.googleapis.com/auth/firebase.messaging',
+            'aud' => 'https://oauth2.googleapis.com/token',
+            'iat' => $now,
+            'exp' => $now + 3600 // 1 hour expiry
+        ];
+
+        // Encode header and payload
+        $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(json_encode($header)));
+        $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(json_encode($payload)));
+
+        // Create signature
+        $signatureInput = $base64UrlHeader . '.' . $base64UrlPayload;
+        $privateKey = openssl_pkey_get_private($credentials['private_key']);
+        openssl_sign($signatureInput, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+        openssl_free_key($privateKey);
+        $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
+
+        // Create JWT
+        $jwt = $signatureInput . '.' . $base64UrlSignature;
+
+        // Exchange JWT for access token
+        $response = \Illuminate\Support\Facades\Http::asForm()->post('https://oauth2.googleapis.com/token', [
+            'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+            'assertion' => $jwt
+        ]);
+
+        if ($response->successful()) {
+            $result = $response->json();
+            return $result['access_token'] ?? null;
+        }
+
+        \Illuminate\Support\Facades\Log::error('Failed to get access token', [
+            'status' => $response->status(),
+            'error' => $response->body()
+        ]);
+
+        return null;
+
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('Exception getting Firebase access token', [
+            'error' => $e->getMessage()
+        ]);
+        return null;
     }
 }
