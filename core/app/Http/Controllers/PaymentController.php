@@ -391,9 +391,9 @@ class PaymentController extends Controller
 
             sendFCMNotification($user, $fcmTitle, $fcmBody, [
                 'type' => 'payment_confirmed',
-                'amount' => $deposit->final_amount,
+                'amount' => (string) $deposit->final_amount,
                 'currency' => $general->site_currency,
-                'visa_count' => $checkout->total_visa
+                'visa_count' => (string) $checkout->total_visa
             ], $fcmUrl);
 
             DB::commit();
