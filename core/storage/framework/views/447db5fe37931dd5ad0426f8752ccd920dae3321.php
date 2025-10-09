@@ -206,8 +206,13 @@
         
 
 
-           
+
         })
   </script>
+
+  <!-- Firebase Cloud Messaging -->
+  <?php if(auth()->guard()->check()): ?>
+  <script type="module" src="<?php echo e(asset('asset/frontend/js/firebase-init.js')); ?>"></script>
+  <?php endif; ?>
 </body>
 </html><?php /**PATH /Users/redwolf-dark/estuairevisa/core/resources/views/frontend/layout/app.blade.php ENDPATH**/ ?>

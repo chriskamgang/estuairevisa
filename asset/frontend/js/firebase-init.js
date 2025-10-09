@@ -76,7 +76,7 @@ window.requestNotificationPermission = async function() {
             console.log('FCM Token:', token);
 
             // Save token to server
-            const response = await fetch('/user/save-fcm-token', {
+            const response = await fetch('/save-fcm-token', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
