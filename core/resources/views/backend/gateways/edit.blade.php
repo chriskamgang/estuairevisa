@@ -103,7 +103,7 @@
                                     <div class="form-group col-md-12">
                                         <label for="">{{__('Payment Instruction')}}</label>
                                         <textarea name="instruction" id="" cols="30" rows="10" class="form-control summernote">
-                                            {{clean($gateway->gateway_parameters->instruction)}}
+                                            {{clean($gateway->gateway_parameters->instruction ?? '')}}
                                         </textarea>
                                     </div>
                                 </div>

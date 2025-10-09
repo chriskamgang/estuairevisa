@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'flutter-success',
-        'razor/success'
+        'razor/success',
+        'payment/freemopay/callback'
     ];
 }

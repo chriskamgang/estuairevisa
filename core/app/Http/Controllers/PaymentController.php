@@ -103,7 +103,8 @@ class PaymentController extends Controller
                 'rate' => $gateway->rate,
                 'charge' => $gateway->charge,
                 'final_amount' => $final_amount,
-                'payment_status' => 0
+                'payment_status' => 0,
+                'checkout_data' => json_encode($checkout_data) // Sauvegarder les données du panier
             ]);
 
             session()->put('trx', $trx);
@@ -172,6 +173,11 @@ class PaymentController extends Controller
 
         $data = $new::process($request, $gateway, $deposit->final_amount, $deposit);
 
+        // Orange Money et MTN Mobile Money (Freemopay)
+        if ($gateway->gateway_name == 'orangemoney' || $gateway->gateway_name == 'mtnmoney') {
+            return $data; // Retourne directement la RedirectResponse
+        }
+
         if ($gateway->gateway_name == 'nowpayments') {
 
             return redirect()->to($data->invoice_url);
@@ -213,7 +219,7 @@ class PaymentController extends Controller
     public static function updateUserData($deposit, $fee_amount, $transaction)
     {
         $general = GeneralSetting::first();
-        $user = auth()->user();
+        $user = auth()->user() ?? User::find($deposit->user_id); // Fallback sur le user du paiement
         $admin = Admin::first();
 
         $type = session('type');
@@ -248,10 +254,24 @@ class PaymentController extends Controller
 
             DB::beginTransaction();
 
+            // Récupérer checkout_data depuis la session ou depuis le paiement
             $checkout_data = session('checkout_data');
 
+            // Si pas de session, récupérer depuis la BDD
+            if (!$checkout_data && $deposit->checkout_data) {
+                $checkout_data = json_decode($deposit->checkout_data, true);
+            }
+
+            if (!$checkout_data || !isset($checkout_data['items'])) {
+                Log::error('Checkout data not found for payment', [
+                    'transaction_id' => $deposit->transaction_id,
+                    'user_id' => $user->id
+                ]);
+                return; // Ne rien faire si pas de données
+            }
+
             $checkout = new Checkout();
-            $checkout->user_id = auth()->user()->id;
+            $checkout->user_id = $deposit->user_id; // Utiliser user_id du paiement au lieu de auth()
             $checkout->trx = strtoupper(Str::random());
             $checkout->total_visa = count($checkout_data['items']);
             $checkout->payment_status = 1;
@@ -263,11 +283,14 @@ class PaymentController extends Controller
 
             foreach ($checkout_data['items'] as $order => $item) {
 
+                // Gérer le format du plan (objet ou tableau)
+                $plan = is_array($item['plan']) ? (object) $item['plan'] : $item['plan'];
+
                 $log = new CheckoutLog();
                 $log->order_number = $order;
-                $log->plan_id = $item['plan']->id;
+                $log->plan_id = $plan->id;
                 $log->checkout_id = $checkout->id;
-                $log->price = $item['plan']->price;
+                $log->price = $plan->price;
                 $log->files = $item['session_info']['files'];
                 $log->personal_info = $item['session_info']['personal_info'];
                 $log->status = 'pending';
@@ -306,6 +329,59 @@ class PaymentController extends Controller
                 'user_id' => $user->id,
                 'payment_status' => 1,
             ]);
+
+            // Envoyer notification WhatsApp
+            // Récupérer le numéro de téléphone (user ou première demande de visa)
+            $phoneNumber = $user->phone_number;
+            if (!$phoneNumber && isset($checkout_data['items'])) {
+                $firstItem = reset($checkout_data['items']);
+                if (isset($firstItem['session_info']['personal_info']['phone_number'])) {
+                    $phoneNumber = $firstItem['session_info']['personal_info']['phone_number'];
+                }
+            }
+
+            if ($phoneNumber) {
+                // Récupérer le nom (user ou première demande)
+                $firstName = $user->first_name;
+                $lastName = $user->last_name;
+                if ((!$firstName || !$lastName) && isset($firstItem['session_info']['personal_info'])) {
+                    $firstName = $firstItem['session_info']['personal_info']['first_name'] ?? $firstName;
+                    $lastName = $firstItem['session_info']['personal_info']['last_name'] ?? $lastName;
+                }
+
+                $whatsappMessage = "🎉 *Paiement Confirmé - Immigration de l'Estuaire* 🎉\n\n";
+                $whatsappMessage .= "Bonjour *{$firstName} {$lastName}*,\n\n";
+                $whatsappMessage .= "Votre paiement de *{$deposit->final_amount} {$general->site_currency}* a été confirmé avec succès!\n\n";
+                $whatsappMessage .= "📋 *Détails de vos demandes de visa:*\n";
+                $whatsappMessage .= "━━━━━━━━━━━━━━━━━━━━\n";
+
+                $visaCount = 1;
+                foreach ($checkout_data['items'] as $order => $item) {
+                    $plan = is_array($item['plan']) ? (object) $item['plan'] : $item['plan'];
+                    $whatsappMessage .= "\n*{$visaCount}. {$plan->title}*\n";
+                    $whatsappMessage .= "   • Numéro de commande: `{$order}`\n";
+                    $whatsappMessage .= "   • Prix: {$plan->price} {$general->site_currency}\n";
+                    $whatsappMessage .= "   • Statut: ⏳ En attente de traitement\n";
+                    $whatsappMessage .= "   • Suivi: " . route('visa.track', ['order_number' => $order]) . "\n";
+                    $visaCount++;
+                }
+
+                $whatsappMessage .= "\n━━━━━━━━━━━━━━━━━━━━\n";
+                $whatsappMessage .= "💳 *Résumé du paiement:*\n";
+                $whatsappMessage .= "   • Transaction: {$deposit->transaction_id}\n";
+                $whatsappMessage .= "   • Montant total: {$deposit->final_amount} {$general->site_currency}\n";
+                $whatsappMessage .= "   • Nombre de visas: {$checkout->total_visa}\n";
+                $whatsappMessage .= "\n📧 Un email de confirmation vous a également été envoyé.\n\n";
+                $whatsappMessage .= "Merci de votre confiance! 🙏";
+
+                // Formatter le numéro de téléphone au format international si nécessaire
+                $phone = $phoneNumber;
+                if (!str_starts_with($phone, '+')) {
+                    $phone = '+237' . ltrim($phone, '0'); // Ajouter code pays Cameroun par défaut
+                }
+
+                sendWhatsApp($phone, $whatsappMessage);
+            }
 
             DB::commit();
 

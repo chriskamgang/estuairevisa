@@ -42,6 +42,9 @@
     use App\Http\Controllers\Gateway\paytm\ProcessController as PaytmProcessController;
     use App\Http\Controllers\Gateway\razorpay\ProcessController as RazorpayProcessController;
     use App\Http\Controllers\Gateway\vouguepay\ProcessController as VouguepayProcessController;
+    use App\Http\Controllers\Gateway\freemopay\ProcessController as FreemopayProcessController;
+    use App\Http\Controllers\Gateway\orangemoney\ProcessController as OrangemoneyProcessController;
+    use App\Http\Controllers\Gateway\mtnmoney\ProcessController as MtnmoneyProcessController;
     use App\Http\Controllers\LoginSecurityController;
     use App\Http\Controllers\VisaApplyController;
     use App\Http\Controllers\VisaController;
@@ -141,42 +144,13 @@
             Route::get('gateway/paypal', [ManageGatewayController::class, 'paypal'])->name('payment.paypal');
             Route::post('gateway/paypal', [ManageGatewayController::class, 'paypalUpdate']);
 
-            Route::get('gateway/stripe', [ManageGatewayController::class, 'stripe'])->name('payment.stripe');
-            Route::post('gateway/stripe', [ManageGatewayController::class, 'stripeUpdate']);
+            Route::get('gateway/orangemoney', [ManageGatewayController::class, 'orangeMoney'])->name('payment.orangemoney');
+            Route::post('gateway/orangemoney', [ManageGatewayController::class, 'orangeMoneyUpdate']);
 
-            Route::get('gateway/coin', [ManageGatewayController::class, 'coin'])->name('payment.coin');
-            Route::post('gateway/coin', [ManageGatewayController::class, 'coinUpdate']);
+            Route::get('gateway/mtnmoney', [ManageGatewayController::class, 'mtnMoney'])->name('payment.mtnmoney');
+            Route::post('gateway/mtnmoney', [ManageGatewayController::class, 'mtnMoneyUpdate']);
 
-            Route::get('gateway/razorpay', [ManageGatewayController::class, 'razorpay'])->name('payment.razorpay');
-            Route::post('gateway/razorpay', [ManageGatewayController::class, 'razorpayUpdate']);
-
-            Route::get('gateway/vougepay', [ManageGatewayController::class, 'vouguepay'])->name('payment.vougepay');
-
-            Route::post('gateway/vougepay', [ManageGatewayController::class, 'vouguepayUpdate']);
-
-
-            Route::get('gateway/mollie', [ManageGatewayController::class, 'mollie'])->name('payment.mollie');
-
-            Route::post('gateway/mollie', [ManageGatewayController::class, 'mollieUpdate']);
-
-
-            Route::get('gateway/nowpayments', [ManageGatewayController::class, 'nowPayments'])->name('payment.nowpay');
-            Route::post('gateway/nowpayments', [ManageGatewayController::class, 'nowPaymentsUpdate']);
-
-
-
-            Route::get('gateway/fullerwave', [ManageGatewayController::class, 'fullerwave'])->name('payment.fullerwave');
-            Route::post('gateway/fullerwave', [ManageGatewayController::class, 'fullerwaveUpdate']);
-
-
-            Route::get('gateway/paystack', [ManageGatewayController::class, 'paystack'])->name('payment.paystack');
-            Route::post('gateway/paystack', [ManageGatewayController::class, 'paystackUpdate']);
-
-
-            Route::get('gateway/paghiper', [ManageGatewayController::class, 'paghiper'])->name('payment.paghiper');
-            Route::post('gateway/paghiper', [ManageGatewayController::class, 'paghiperUpdate']);
-
-            Route::resource('gateway', DynamicGatewayController::class);
+            Route::resource('gateway', DynamicGatewayController::class)->except(['show']);
 
 
 
@@ -416,6 +390,23 @@
         Route::get('visa/search/countries','planSearchByCountry')->name('visa.country.search');
         Route::get('cart/remove/{trx}', 'removeCart')->name('visa.cart.remove');
         Route::get('visa/applay/placeorder', 'placeorder')->middleware(['auth', 'inactive', 'is_email_verified'])->name(('visa.placeorder'));
+    });
+
+    // Routes Freemopay (Orange Money & MTN Mobile Money avec API)
+    Route::prefix('payment')->name('freemopay.')->group(function () {
+        Route::get('freemopay/waiting', [FreemopayProcessController::class, 'waiting'])->name('waiting');
+        Route::post('freemopay/callback', [FreemopayProcessController::class, 'callback'])->name('callback');
+        Route::post('freemopay/check-status', [FreemopayProcessController::class, 'checkStatus'])->name('check.status');
+    });
+
+    // Routes Orange Money Manuel
+    Route::prefix('payment')->name('orangemoney.')->group(function () {
+        Route::post('orangemoney/submit-proof', [OrangemoneyProcessController::class, 'submitProof'])->name('submit.proof');
+    });
+
+    // Routes MTN Mobile Money Manuel
+    Route::prefix('payment')->name('mtnmoney.')->group(function () {
+        Route::post('mtnmoney/submit-proof', [MtnmoneyProcessController::class, 'submitProof'])->name('submit.proof');
     });
 
 

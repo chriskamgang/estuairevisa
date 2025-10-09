@@ -105,6 +105,35 @@
 
                                 </div>
 
+                                <div class="form-group col-md-12">
+                                    <hr>
+                                    <h5>{{ __('WhatsApp Notification Settings') }}</h5>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="" class="w-100">{{ __('WhatsApp Notifications') }} </label>
+                                    <div class="custom-switch custom-switch-label-onoff">
+                                        <input class="custom-switch-input" id="whatsapp_notif" type="checkbox"
+                                            name="whatsapp_notification" {{ $general->whatsapp_notification ?
+                                        'checked' : '' }}>
+                                        <label class="custom-switch-btn" for="whatsapp_notif"></label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="ultramsg_instance_id">{{ __('UltraMsg Instance ID') }}</label>
+                                    <input type="text" name="ultramsg_instance_id" placeholder="@lang('Instance ID')"
+                                        class="form-control" value="{{ $general->ultramsg_instance_id ?? '' }}">
+                                    <small class="text-muted">{{ __('Example: instance97191') }}</small>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="ultramsg_token">{{ __('UltraMsg Token') }}</label>
+                                    <input type="text" name="ultramsg_token" placeholder="@lang('Token')"
+                                        class="form-control" value="{{ $general->ultramsg_token ?? '' }}">
+                                    <small class="text-muted">{{ __('Your UltraMsg API token') }}</small>
+                                </div>
+
 
 
                                 <div class="form-group col-md-12">

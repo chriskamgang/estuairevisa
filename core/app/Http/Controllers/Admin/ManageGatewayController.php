@@ -1151,6 +1151,108 @@ class ManageGatewayController extends Controller
         return redirect()->back()->withNotify($notify);
     }
 
+    // Orange Money Gateway
+    public function orangeMoney()
+    {
+        $data['pageTitle'] = 'Orange Money Payment';
+        $data['navPaymentGatewayActiveClass'] = 'active';
+        $data['subNavOrangeMoneyPaymentActiveClass'] = 'active';
+        $data['gateway'] = Gateway::where('gateway_name', 'orangemoney')->first();
 
+        return view('backend.gateways.orangemoney')->with($data);
+    }
+
+    public function orangeMoneyUpdate(Request $request)
+    {
+        $gateway = Gateway::where('gateway_name', 'orangemoney')->first();
+
+        $request->validate([
+            'gateway_currency' => 'required',
+            'app_key' => 'required',
+            'secret_key' => 'required',
+            'status' => 'required',
+            'rate' => 'required',
+            'charge' => 'required'
+        ]);
+
+        $data = [
+            'gateway_currency' => $request->gateway_currency,
+            'app_key' => $request->app_key,
+            'secret_key' => $request->secret_key,
+            'payment_type' => 'automatic'
+        ];
+
+        if ($gateway) {
+            if ($request->hasFile('gateway_image')) {
+                $filename = uploadImage($request->gateway_image, gatewayImagePath(), '', $gateway->gateway_image);
+            }
+
+            $gateway->update([
+                'gateway_image' => $filename ?? $gateway->gateway_image,
+                'gateway_parameters' => $data,
+                'rate' => $request->rate,
+                'charge' => $request->charge,
+                'status' => $request->status
+            ]);
+
+            $notify[] = ['success', "Orange Money Setting Updated Successfully"];
+            return redirect()->back()->withNotify($notify);
+        }
+
+        $notify[] = ['error', "Gateway not found"];
+        return redirect()->back()->withNotify($notify);
+    }
+
+    // MTN Mobile Money Gateway
+    public function mtnMoney()
+    {
+        $data['pageTitle'] = 'MTN Mobile Money Payment';
+        $data['navPaymentGatewayActiveClass'] = 'active';
+        $data['subNavMtnMoneyPaymentActiveClass'] = 'active';
+        $data['gateway'] = Gateway::where('gateway_name', 'mtnmoney')->first();
+
+        return view('backend.gateways.mtnmoney')->with($data);
+    }
+
+    public function mtnMoneyUpdate(Request $request)
+    {
+        $gateway = Gateway::where('gateway_name', 'mtnmoney')->first();
+
+        $request->validate([
+            'gateway_currency' => 'required',
+            'app_key' => 'required',
+            'secret_key' => 'required',
+            'status' => 'required',
+            'rate' => 'required',
+            'charge' => 'required'
+        ]);
+
+        $data = [
+            'gateway_currency' => $request->gateway_currency,
+            'app_key' => $request->app_key,
+            'secret_key' => $request->secret_key,
+            'payment_type' => 'automatic'
+        ];
+
+        if ($gateway) {
+            if ($request->hasFile('gateway_image')) {
+                $filename = uploadImage($request->gateway_image, gatewayImagePath(), '', $gateway->gateway_image);
+            }
+
+            $gateway->update([
+                'gateway_image' => $filename ?? $gateway->gateway_image,
+                'gateway_parameters' => $data,
+                'rate' => $request->rate,
+                'charge' => $request->charge,
+                'status' => $request->status
+            ]);
+
+            $notify[] = ['success', "MTN Mobile Money Setting Updated Successfully"];
+            return redirect()->back()->withNotify($notify);
+        }
+
+        $notify[] = ['error', "Gateway not found"];
+        return redirect()->back()->withNotify($notify);
+    }
 
 }

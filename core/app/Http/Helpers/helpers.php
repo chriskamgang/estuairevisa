@@ -427,3 +427,61 @@ function selectedLanguage()
         return $default;
     }
 }
+
+/**
+ * Envoie un message WhatsApp via UltraMsg API
+ *
+ * @param string $phoneNumber Numéro de téléphone au format international (ex: +237676781795)
+ * @param string $message Message à envoyer
+ * @return array Résultat de l'envoi
+ */
+function sendWhatsApp($phoneNumber, $message)
+{
+    // Récupérer la configuration depuis les paramètres généraux
+    $settings = \App\Models\GeneralSetting::first();
+
+    // Vérifier si les notifications WhatsApp sont activées
+    if (!$settings || !$settings->whatsapp_notification) {
+        return ['success' => false, 'error' => 'WhatsApp notifications disabled'];
+    }
+
+    $instanceId = $settings->ultramsg_instance_id;
+    $token = $settings->ultramsg_token;
+
+    // Vérifier que les identifiants sont configurés
+    if (!$instanceId || !$token) {
+        \Illuminate\Support\Facades\Log::error('Configuration UltraMsg manquante');
+        return ['success' => false, 'error' => 'UltraMsg not configured'];
+    }
+
+    try {
+        $response = \Illuminate\Support\Facades\Http::asForm()
+            ->post("https://api.ultramsg.com/{$instanceId}/messages/chat", [
+                'token' => $token,
+                'to' => $phoneNumber,
+                'body' => $message,
+                'priority' => 10
+            ]);
+
+        if ($response->successful()) {
+            \Illuminate\Support\Facades\Log::info('WhatsApp envoyé', [
+                'phone' => $phoneNumber,
+                'response' => $response->json()
+            ]);
+            return ['success' => true, 'data' => $response->json()];
+        } else {
+            \Illuminate\Support\Facades\Log::error('Erreur envoi WhatsApp', [
+                'phone' => $phoneNumber,
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+            return ['success' => false, 'error' => $response->body()];
+        }
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('Exception WhatsApp', [
+            'phone' => $phoneNumber,
+            'error' => $e->getMessage()
+        ]);
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}

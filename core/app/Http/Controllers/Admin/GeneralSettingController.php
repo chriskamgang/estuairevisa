@@ -124,7 +124,10 @@ class GeneralSettingController extends Controller
             'copyright' => $request->copyright,
             'is_referral_active' => $request->is_referral_active,
             'referral_amount_type' => $request->referral_amount_type,
-            'referral_amount' => $request->referral_amount
+            'referral_amount' => $request->referral_amount,
+            'whatsapp_notification' => $request->whatsapp_notification == 'on' ? 1 : 0,
+            'ultramsg_instance_id' => $request->ultramsg_instance_id,
+            'ultramsg_token' => $request->ultramsg_token
 
 
         ]);
