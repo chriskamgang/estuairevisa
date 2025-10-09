@@ -133,6 +133,58 @@ class VisaApplyController extends Controller
         $log->note = $checkout->note;
         $log->save();
 
+        // Envoyer notification WhatsApp
+        $user = $checkout->checkout->user;
+        $personalInfo = json_decode($checkout->personal_info, true);
+
+        // Récupérer le numéro de téléphone
+        $phoneNumber = $user->phone_number ?? $personalInfo['phone_number'] ?? null;
+
+        if ($phoneNumber) {
+            // Formatter le numéro au format international
+            $phone = $phoneNumber;
+            if (!str_starts_with($phone, '+')) {
+                $phone = '+237' . ltrim($phone, '0');
+            }
+
+            // Mapper les statuts en français
+            $statusLabels = [
+                'pending' => '⏳ En attente',
+                'under_review' => '🔍 En cours d\'examen',
+                'proccessing' => '⚙️ En traitement',
+                'issues' => '⚠️ Problème détecté',
+                'complete' => '✅ Complété',
+                'shipped' => '📦 Expédié',
+                'reject' => '❌ Rejeté'
+            ];
+
+            $statusLabel = $statusLabels[$checkout->status] ?? $checkout->status;
+
+            // Récupérer le nom du client
+            $firstName = $user->first_name ?? $personalInfo['first_name'] ?? '';
+            $lastName = $user->last_name ?? $personalInfo['last_name'] ?? '';
+
+            $whatsappMessage = "📋 *Mise à jour de votre demande de visa* 📋\n\n";
+            $whatsappMessage .= "Bonjour *{$firstName} {$lastName}*,\n\n";
+            $whatsappMessage .= "Le statut de votre demande de visa a été mis à jour:\n\n";
+            $whatsappMessage .= "━━━━━━━━━━━━━━━━━━━━\n";
+            $whatsappMessage .= "📝 *Détails de la demande:*\n";
+            $whatsappMessage .= "   • Numéro: `{$checkout->order_number}`\n";
+            $whatsappMessage .= "   • Type de visa: {$checkout->plan->title}\n";
+            $whatsappMessage .= "   • Nouveau statut: {$statusLabel}\n";
+            $whatsappMessage .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+            if ($checkout->note) {
+                $whatsappMessage .= "💬 *Note de l'administrateur:*\n";
+                $whatsappMessage .= "_{$checkout->note}_\n\n";
+            }
+
+            $whatsappMessage .= "🔗 *Suivre votre demande:*\n";
+            $whatsappMessage .= route('visa.track', ['order_number' => $checkout->order_number]) . "\n\n";
+            $whatsappMessage .= "Merci de votre confiance! 🙏";
+
+            sendWhatsApp($phone, $whatsappMessage);
+        }
 
         return back()->with('success', 'Status changed successfully completed');
     }
