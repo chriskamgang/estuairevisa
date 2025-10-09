@@ -135,7 +135,9 @@ class VisaApplyController extends Controller
 
         // Envoyer notification WhatsApp
         $user = $checkout->checkout->user;
-        $personalInfo = json_decode($checkout->personal_info, true);
+        $personalInfo = is_string($checkout->personal_info)
+            ? json_decode($checkout->personal_info, true)
+            : (array) $checkout->personal_info;
 
         // Récupérer le numéro de téléphone
         $phoneNumber = $user->phone_number ?? $personalInfo['phone_number'] ?? null;
