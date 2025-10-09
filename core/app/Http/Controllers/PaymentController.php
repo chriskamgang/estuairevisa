@@ -331,8 +331,7 @@ class PaymentController extends Controller
                 'payment_status' => 1,
             ]);
 
-            // Envoyer notification WhatsApp
-            // Récupérer le numéro de téléphone (user ou première demande de visa)
+            // Récupérer le numéro de téléphone pour WhatsApp (préparation)
             $phoneNumber = $user->phone_number;
             if (!$phoneNumber && isset($checkout_data['items'])) {
                 $firstItem = reset($checkout_data['items']);
@@ -341,13 +340,31 @@ class PaymentController extends Controller
                 }
             }
 
+            // Envoyer notification push FCM d'abord
+            $fcmTitle = "🎉 Paiement Confirmé!";
+            $fcmBody = "Votre paiement de {$deposit->final_amount} {$general->site_currency} a été confirmé. {$checkout->total_visa} demande(s) de visa en cours de traitement.";
+            $fcmUrl = route('user.dashboard');
+
+            sendFCMNotification($user, $fcmTitle, $fcmBody, [
+                'type' => 'payment_confirmed',
+                'amount' => (string) $deposit->final_amount,
+                'currency' => $general->site_currency,
+                'visa_count' => (string) $checkout->total_visa
+            ], $fcmUrl);
+
+            // Attendre 5 secondes avant d'envoyer WhatsApp
             if ($phoneNumber) {
+                sleep(5);
+
                 // Récupérer le nom (user ou première demande)
                 $firstName = $user->first_name;
                 $lastName = $user->last_name;
-                if ((!$firstName || !$lastName) && isset($firstItem['session_info']['personal_info'])) {
-                    $firstName = $firstItem['session_info']['personal_info']['first_name'] ?? $firstName;
-                    $lastName = $firstItem['session_info']['personal_info']['last_name'] ?? $lastName;
+                if ((!$firstName || !$lastName) && isset($checkout_data['items'])) {
+                    $firstItem = reset($checkout_data['items']);
+                    if (isset($firstItem['session_info']['personal_info'])) {
+                        $firstName = $firstItem['session_info']['personal_info']['first_name'] ?? $firstName;
+                        $lastName = $firstItem['session_info']['personal_info']['last_name'] ?? $lastName;
+                    }
                 }
 
                 $whatsappMessage = "🎉 *Paiement Confirmé - Immigration de l'Estuaire* 🎉\n\n";
@@ -383,18 +400,6 @@ class PaymentController extends Controller
 
                 sendWhatsApp($phone, $whatsappMessage);
             }
-
-            // Envoyer notification push FCM
-            $fcmTitle = "🎉 Paiement Confirmé!";
-            $fcmBody = "Votre paiement de {$deposit->final_amount} {$general->site_currency} a été confirmé. {$checkout->total_visa} demande(s) de visa en cours de traitement.";
-            $fcmUrl = route('user.dashboard');
-
-            sendFCMNotification($user, $fcmTitle, $fcmBody, [
-                'type' => 'payment_confirmed',
-                'amount' => (string) $deposit->final_amount,
-                'currency' => $general->site_currency,
-                'visa_count' => (string) $checkout->total_visa
-            ], $fcmUrl);
 
             DB::commit();
 
