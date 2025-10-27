@@ -69,17 +69,10 @@
                                 </div>
         
                                 <div class="col-lg-6">
-                                    <label class="form-label">{{ __('From') }}</label>
+                                    <label class="form-label">{{ __('Destination Country') }}</label>
                                     <div class="visa-icon-field">
-                                        <i class="bi bi-flag"></i>
-                                        <input type="text" name="from" value="{{ $from->name }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label class="form-label">{{ __('Live in') }}</label>
-                                    <div class="visa-icon-field">
-                                        <i class="bi bi-globe-americas"></i>
-                                        <input type="text" name="live" value="{{ $live->name }}" readonly>
+                                        <i class="bi bi-airplane"></i>
+                                        <input type="text" name="destination_country" value="{{ $plan->country->name }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -140,8 +133,7 @@
                 email_address: $('input[name="email_address"]').val(),
                 first_name: $('input[name="first_name"]').val(),
                 last_name: $('input[name="last_name"]').val(),
-                from: $('input[name="from"]').val(),
-                live: $('input[name="live"]').val(),
+                destination_country: $('input[name="destination_country"]').val(),
                 passport_number: $('input[name="passport_number"]').val(),
                 profession: $('input[name="profession"]').val(),
                 travel_date: $('input[name="travel_date"]').val(),

@@ -14,9 +14,9 @@ class VisaApplyController extends Controller
 {
     public function startApplay($id)
     {
-        
+
         $plan = Plan::find($id);
-        
+
 
         if (!$plan) {
             return [
@@ -39,13 +39,21 @@ class VisaApplyController extends Controller
             $data['trx'] = strtoupper(Str::random());
         }
 
+        // Définir des valeurs par défaut pour from_id et live_id
+        // On utilise le premier pays disponible dans la liste
+        $firstCountry = Country::active()->first();
+        if ($firstCountry) {
+            $data['from_id'] = $firstCountry->id;
+            $data['live_id'] = $firstCountry->id;
+        }
+
         session()->put('apply_infos', $data);
-        
-        $countries = Country::whereIn('id',$plan->country_ids)->get();
+
+        // Passer directement au formulaire d'informations de fichier
         return [
             'status' => true,
-            'html' => view('frontend.form_modals.countries',compact('countries'))->render(),
-            'modal_name' => 'countrySelectModal'
+            'html' => view('frontend.form_modals.file_info_modal')->render(),
+            'modal_name' => 'fileInfoModal'
         ];
     }
 
@@ -165,11 +173,12 @@ class VisaApplyController extends Controller
             'profession' => 'required',
             'travel_date' => 'required|date|after_or_equal:today',
             'travel_purpose' => 'required',
+            'destination_country' => 'required',
 
         ]);
-     
-        $data['from_country'] = $request->from;
-        $data['live_country'] = $request->live;
+
+        $data['from_country'] = $request->destination_country;
+        $data['live_country'] = $request->destination_country;
     
         $session = session('apply_infos');
 

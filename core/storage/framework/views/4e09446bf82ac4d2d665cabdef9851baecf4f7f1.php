@@ -7,64 +7,10 @@ $countries = \App\Models\Country::active()->get();
 ?>
 
 
+
+
+
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-xl-10">
-            <div class="visa-form-wrapper">
-                <div class="single-find-field">
-                    <div class="icon">
-                        <i class="bi bi-geo-alt-fill"></i>
-                    </div>
-                    <div class="visa-field">
-                        <span><?php echo e(__("I am from")); ?></span>
-                        <input type="text" name="i_am_from" value="" autocomplete="off">
-                        <ul class="visa-country-list from-country-list scroll-y">
-                            <?php $__empty_1 = true; $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <li data-value="<?php echo e($country->name); ?>" data-id="<?php echo e($country->id); ?>">
-                                <img src="<?php echo e(getFile('country',$country->image)); ?>" alt="image">
-                                <span><?php echo e($country->name); ?></span>
-                            </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                            <li class="no-result">
-                                <span class="icon"><i class="bi bi-search"></i></span>
-                                <p class="mb-0"><?php echo e(__("The country you are looking for is not on our list.")); ?>
-
-                                </p>
-                            </li>
-                            <?php endif; ?>
-                        </ul>
-                    </div>
-                </div>
-                <div class="single-find-field">
-                    <div class="icon">
-                        <i class="bi bi-house-door-fill"></i>
-                    </div>
-                    <div class="visa-field">
-                        <span><?php echo e(__("I live in")); ?></span>
-                        <input type="text" name="i_live_in" value="" autocomplete="off">
-
-                        <ul class="visa-country-list live-country-list scroll-y">
-                            <?php $__empty_1 = true; $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <li data-value="<?php echo e($country->name); ?>" data-id="<?php echo e($country->id); ?>">
-                                <img src="<?php echo e(getFile('country',$country->image)); ?>" alt="image">
-                                <span><?php echo e($country->name); ?></span>
-                            </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                            <li class="no-result">
-                                <span class="icon"><i class="bi bi-search"></i></span>
-                                <p class="mb-0"><?php echo e(__("The country you are looking for is not on our list.")); ?>
-
-                                </p>
-                            </li>
-                            <?php endif; ?>
-                        </ul>
-                    </div>
-                </div>
-                <button class="visa-find-btn find_btn"><i class="fa-solid fa-magnifying-glass"></i> <?php echo e(__("Find
-                    Now")); ?></button>
-            </div>
-        </div>
-    </div>
 
     <div class="visa-package-wrapper" id="package_section">
         <div class="row justify-content-center">
@@ -77,14 +23,14 @@ $countries = \App\Models\Country::active()->get();
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="single-tab" data-bs-toggle="tab" data-bs-target="#single"
                             type="button" role="tab" aria-controls="single" aria-selected="true">
-                            <?php echo e(__("Single Entry")); ?>
+                            <?php echo e(__("Single")); ?>
 
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="multi-tab" data-bs-toggle="tab" data-bs-target="#multi"
                             type="button" role="tab" aria-controls="multi" aria-selected="false">
-                            <?php echo e(__("Multiple Entry")); ?>
+                            <?php echo e(__("Groupe visa")); ?>
 
                         </button>
                     </li>

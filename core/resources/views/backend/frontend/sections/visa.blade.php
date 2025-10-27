@@ -11,7 +11,8 @@ $content = content('visa.content');
         <div class="container non-editable-area" data-gjs-stylable='false' data-gjs-draggable='false'
             data-gjs-editable='false' data-gjs-removable='false'
             data-gjs-propagate='["removable","editable","draggable","stylable"]'>
-            <div class="row justify-content-center">
+            {{-- Section de recherche désactivée --}}
+            {{-- <div class="row justify-content-center">
                 <div class="col-xl-10">
                     <div class="visa-form-wrapper">
                         <div class="single-find-field">
@@ -64,7 +65,7 @@ $content = content('visa.content');
                         <button class="visa-find-btn"><i class="fa-solid fa-magnifying-glass"></i> Find Now</button>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="visa-package-wrapper">
                 <div class="row justify-content-center">
                     <div class="col-lg-7 text-center">
@@ -76,13 +77,13 @@ $content = content('visa.content');
                                 <button class="nav-link active" id="single-tab" data-bs-toggle="tab"
                                     data-bs-target="#single" type="button" role="tab" aria-controls="single"
                                     aria-selected="true">
-                                    {{ __("Single Entry") }}
+                                    {{ __("Single") }}
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="multi-tab" data-bs-toggle="tab" data-bs-target="#multi"
                                     type="button" role="tab" aria-controls="multi" aria-selected="false">
-                                    {{ __("Multiple Entry") }}
+                                    {{ __("Groupe visa") }}
                                 </button>
                             </li>
                         </ul>

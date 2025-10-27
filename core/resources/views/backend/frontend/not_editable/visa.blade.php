@@ -7,7 +7,8 @@ $countries = \App\Models\Country::active()->get();
 @endphp
 
 
-<div class="container">
+{{-- Section de recherche désactivée --}}
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-xl-10">
             <div class="visa-form-wrapper">
@@ -62,7 +63,9 @@ $countries = \App\Models\Country::active()->get();
                     Now")}}</button>
             </div>
         </div>
-    </div>
+    </div> --}}
+
+<div class="container">
 
     <div class="visa-package-wrapper" id="package_section">
         <div class="row justify-content-center">
@@ -75,13 +78,13 @@ $countries = \App\Models\Country::active()->get();
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="single-tab" data-bs-toggle="tab" data-bs-target="#single"
                             type="button" role="tab" aria-controls="single" aria-selected="true">
-                            {{ __("Single Entry") }}
+                            {{ __("Single") }}
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="multi-tab" data-bs-toggle="tab" data-bs-target="#multi"
                             type="button" role="tab" aria-controls="multi" aria-selected="false">
-                            {{ __("Multiple Entry") }}
+                            {{ __("Groupe visa") }}
                         </button>
                     </li>
                 </ul>
