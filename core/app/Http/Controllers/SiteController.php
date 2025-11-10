@@ -18,14 +18,41 @@ class SiteController extends Controller
     {
 
         $pageTitle = 'Home';
-        $page = Page::where('name', 'home')->where('language_id',selectedLanguage()->id)->firstOrFail();
+        $page = Page::where('name', 'home')->where('language_id',selectedLanguage()->id)->first();
+
+        // If page doesn't exist for selected language, use default language
+        if (!$page) {
+            $defaultLanguage = \App\Models\Language::where('is_default', 1)->first();
+            if ($defaultLanguage) {
+                $page = Page::where('name', 'home')->where('language_id', $defaultLanguage->id)->first();
+            }
+        }
+
+        // If still no page found, throw 404
+        if (!$page) {
+            abort(404, 'Home page not found');
+        }
+
         return view('frontend.home', compact('pageTitle', 'page'));
     }
 
     public function page(Request $request)
     {
 
-        $page = Page::where('slug', $request->pages)->where('language_id',selectedLanguage()->id)->firstOrFail();
+        $page = Page::where('slug', $request->pages)->where('language_id',selectedLanguage()->id)->first();
+
+        // If page doesn't exist for selected language, try default language
+        if (!$page) {
+            $defaultLanguage = \App\Models\Language::where('is_default', 1)->first();
+            if ($defaultLanguage) {
+                $page = Page::where('slug', $request->pages)->where('language_id', $defaultLanguage->id)->first();
+            }
+        }
+
+        // If still no page found, throw 404
+        if (!$page) {
+            abort(404, 'Page not found');
+        }
 
         if($page->slug == 'home'){
             return redirect()->route('home');
