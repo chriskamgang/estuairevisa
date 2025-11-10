@@ -7,6 +7,7 @@ use App\Models\Language;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
 {
@@ -122,20 +123,37 @@ class PagesController extends Controller
     public function pageContent($id)
     {
         $data['page'] = Page::findOrFail($id);
-       
+
         $version = "1.0.0";
 
         $jsonUrl = resource_path('views/all.json');
 
+        if (!file_exists($jsonUrl)) {
+            abort(500, 'Configuration file all.json not found');
+        }
+
         $sections = json_decode(file_get_contents($jsonUrl), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            abort(500, 'Invalid JSON in all.json: ' . json_last_error_msg());
+        }
 
         foreach ($sections as $key => $section) {
 
             if (!isset($section['no_selection'])) {
-                $data['contents'][$key] = [
-                    'html' => view('backend.frontend.sections.' . $key)->render(),
-                    'icon' => $section['others']['icon'] ?? ""
-                ];
+                try {
+                    $viewPath = 'backend.frontend.sections.' . $key;
+                    if (view()->exists($viewPath)) {
+                        $data['contents'][$key] = [
+                            'html' => view($viewPath)->render(),
+                            'icon' => $section['others']['icon'] ?? ""
+                        ];
+                    } else {
+                        Log::warning("View not found for section: {$key}");
+                    }
+                } catch (\Exception $e) {
+                    Log::error("Error rendering section {$key}: " . $e->getMessage());
+                }
             }
         }
 
@@ -143,14 +161,14 @@ class PagesController extends Controller
         $data['version'] = $version;
 
         $components = !empty($data['page']->components) ? json_decode($data['page']->components, true) : [];
-      
+
         $components = str_replace("{base_url}", url('/'), json_encode($components));
         $data['components'] = json_decode($components, true);
 
         $styles = !empty($data['page']->styles) ? json_decode($data['page']->styles, true) : [];
         $styles = str_replace("{base_url}", url('/'), json_encode($styles));
         $data['styles'] = json_decode($styles, true);
-     
+
         return view('backend.frontend.content', $data);
     }
 
