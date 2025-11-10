@@ -24,7 +24,9 @@ $countries = \App\Models\Country::active()->slider()->get();
           </div>
         </destination-section>
 
-        <a href="#0" target="_blank" class="btn btn-primary mt-4">{{ __('Consulting Now') }}</a>
+        <a href="https://wa.me/237640387258?text=Hello,%20I%20would%20like%20to%20consult%20about%20visa%20services" target="_blank" class="btn btn-primary mt-4">
+          <i class="bi bi-whatsapp"></i> {{ __('Consulting Now') }}
+        </a>
       </div>
       <div class="col-lg-6 text-center ps-xxl-4">
         <img src="assets/images/saudi-arab-map.png" alt="map image">
@@ -40,7 +42,6 @@ $countries = \App\Models\Country::active()->slider()->get();
   $(function () {
     setTimeout(() => {
       function initSlickSlider($selector, options) {
-        alert('hi')
         if ($selector.hasClass('slick-initialized')) {
             $selector.slick('unslick');
         }

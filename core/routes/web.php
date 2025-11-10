@@ -209,6 +209,11 @@
 
             Route::resource('plans', PlanController::class);
 
+            // Frontend Images Management
+            Route::get('frontend/images', [App\Http\Controllers\Admin\FrontendImageController::class, 'index'])->name('frontend.images.index');
+            Route::get('frontend/images/{image}/edit', [App\Http\Controllers\Admin\FrontendImageController::class, 'edit'])->name('frontend.images.edit');
+            Route::put('frontend/images/{image}', [App\Http\Controllers\Admin\FrontendImageController::class, 'update'])->name('frontend.images.update');
+
             Route::get('country', [CountryController::class, 'index'])->name('country.index');
             Route::post('country', [CountryController::class, 'store'])->name('country.store');
             Route::post('country/{id}/update', [CountryController::class, 'update'])->name('country.update');

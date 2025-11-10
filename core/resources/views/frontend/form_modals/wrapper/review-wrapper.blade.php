@@ -24,7 +24,7 @@
                 <div class="mt-sm-5 mt-4">
                     <div id="review-wrapper">
                         <div class="d-flex flex-wrap align-items-center gap-2 justify-content-sm-between justify-content-center mb-sm-5 mb-3">
-                            <p class="text-xl text-uppercase text-primary mb-0 plan_name">{{ $plan->title }} <span class="visa-package-country text-nowrap"> {{ __('Visa for:') }} {{$plan->country->name}}</span> </p>
+                            <p class="text-xl text-uppercase text-primary mb-0 plan_name">{{ $plan->title }}</p>
                             <p class="mb-0 d-flex align-items-center gap-2 justify-content-end">{{ __('Price') }}: <b
                                     class="text-dark text-xl plan_price">{{ number_format($plan->price, 2)." ".$general->site_currency }}</b></p>
                         </div>
@@ -35,7 +35,7 @@
                                 <select name="plan_id" class="form-select bg-white">
                                     @foreach($plans as $item)
                                     <option value="{{$item->id}}" {{$item->id == $plan->id ? 'selected' : ''}}
-                                        data-action="{{route('visa.plan.change',$item->id)}}" data-duration="{{$item->heading}}" data-title="{{$item->title}}" data-description="{{$item->short_description}}" data-country="{{$item->country->name}}" >{{$item->title}}
+                                        data-action="{{route('visa.plan.change',$item->id)}}" data-duration="{{$item->heading}}" data-title="{{$item->title}}" data-description="{{$item->short_description}}">{{$item->title}}
                                         - {{ number_format($item->price,2)." ".$general->site_currency }}</option>
                                     @endforeach
                                 </select>
@@ -140,7 +140,6 @@
         $("select[name=plan_id]").on('change', function () {
 
             let selectedOption = $(this).find('option:selected');
-            let country = selectedOption.data('country');
             let action = selectedOption.data('action');
             let title = selectedOption.data('title');
             let description = selectedOption.data('duration');
@@ -159,7 +158,7 @@
                             message: response.message || 'Something went wrong.',
                             position: 'topRight'
                         });
-                        $('.plan_name').text(`${response.plan_name} || ${country}`)
+                        $('.plan_name').text(`${response.plan_name}`)
                         $('.plan_price').text(`${response.plan_price} ${currency}`)
                         $('.visa_title').text(`${title}`)
                         $('.visa_short_description').text(`${description}`)

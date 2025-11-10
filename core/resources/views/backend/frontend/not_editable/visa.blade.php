@@ -99,7 +99,6 @@ $countries = \App\Models\Country::active()->get();
                         <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
                             <h3 class="title mb-0">{{ $plan->title }}</h3>
                             <p>{{ $plan->heading }}</p>
-                            <span class="visa-package-country">{{ __("Visa for") }}: {{$plan->country->name}}</span>
                             <h4 class="price">{{ number_format($plan->price, 2).' '.$general->site_currency}}
                             </h4>
                             <p>{{$plan->short_description}}</p>
@@ -123,7 +122,6 @@ $countries = \App\Models\Country::active()->get();
                         <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
                             <h3 class="title mb-0">{{ $plan->title }}</h3>
                             <p>{{ $plan->heading }}</p>
-                            <span class="visa-package-country">{{ __("Visa for") }}: {{$plan->country->name}}</span>
                             <h4 class="price">{{ number_format($plan->price, 2).' '.$general->site_currency }}
                             </h4>
                             <p>{{$plan->short_description}}</p>

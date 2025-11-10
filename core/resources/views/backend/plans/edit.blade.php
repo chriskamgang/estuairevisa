@@ -69,22 +69,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">{{__("Available Countries")}}</label>
-                                        <select name="country_ids[]" id="" class="form-control multi-select" multiple>
+                                        <select name="country_ids[]" id="" class="form-control multi-select" multiple required>
                                             @foreach($countries as $country)
                                             <option value="{{$country->id}}" {{in_array($country->id,$plan->country_ids ??[])
                                                 ? 'selected' : ''}}>{{$country->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">{{__("For Country")}}</label>
-                                        <select name="for_country"  class="form-control" required>
-                                            <option>{{__("Select country")}}</option>
-                                            @foreach($countries as $country)
-                                            <option value="{{$country->id}}" {{$plan->for_country == $country->id ? 'selected' : ''}}>{{$country->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

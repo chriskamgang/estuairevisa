@@ -73,6 +73,21 @@
                             <p class="mb-0">{{ __("info@example.com") }}</p>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="contact-item" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; border: none;">
+                            <h5 class="title" style="color: white;">
+                                <i class="bi bi-whatsapp"></i>
+                                {{ __('Contact via WhatsApp') }}
+                            </h5>
+                            <p class="mb-3" style="color: rgba(255,255,255,0.9);">{{ __("+237 640 387 258") }}</p>
+                            <a href="https://wa.me/237640387258?text=Hello,%20I%20would%20like%20to%20consult%20about%20visa%20services"
+                               target="_blank"
+                               class="btn btn-light btn-sm"
+                               style="color: #25D366; font-weight: 600;">
+                                <i class="bi bi-whatsapp"></i> {{ __('Chat on WhatsApp') }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

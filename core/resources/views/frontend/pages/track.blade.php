@@ -118,7 +118,7 @@ $breadcrumb = content('breadcrumb.content');
                         </div>
                         <div class="col-md-6">
                             <h6>{{ __("Applied for") }}</h6>
-                            <p><span class="badge badge-primary text-md">{{$visa->plan->country->name}}</span></p>
+                            <p><span class="badge badge-primary text-md">{{ isset($visa->personal_info->destination_country) ? \App\Models\Country::find($visa->personal_info->destination_country)->name ?? 'N/A' : 'N/A' }}</span></p>
                         </div>
                     </div>
                 </div>

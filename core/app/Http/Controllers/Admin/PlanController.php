@@ -39,7 +39,6 @@ class PlanController extends Controller
             'country_ids' => 'required|array',
             'price' => 'required|numeric|min:0',
             'status' => 'required|boolean',
-            'for_country' => 'required',
             'is_recommended' => 'required|boolean',
         ]);
 
@@ -71,7 +70,6 @@ class PlanController extends Controller
             'short_description' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'country_ids' => 'required|array',
-             'for_country' => 'required',
             'status' => 'required|boolean',
             'is_recommended' => 'required|boolean',
         ]);

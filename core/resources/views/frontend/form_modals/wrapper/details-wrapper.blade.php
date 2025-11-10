@@ -25,7 +25,7 @@
                     <div id="details-wrapper">
         
                         <div class="d-flex flex-wrap align-items-center gap-2 justify-content-sm-between justify-content-center mb-sm-5 mb-4">
-                            <p class="text-xl text-uppercase text-primary mb-0">{{ $plan->title }}   <span class="visa-package-country text-nowrap"> {{ __('Visa for:') }} {{$plan->country->name}}</span></p>
+                            <p class="text-xl text-uppercase text-primary mb-0">{{ $plan->title }}</p>
                             <p class="mb-0 d-flex align-items-center gap-2 justify-content-end">{{ __('Price') }}:
                             <b class="text-dark text-xl">{{ number_format($plan->price, 2).' '.$general->site_currency }}</b></p>
                         </div>
@@ -72,7 +72,17 @@
                                     <label class="form-label">{{ __('Destination Country') }}</label>
                                     <div class="visa-icon-field">
                                         <i class="bi bi-airplane"></i>
-                                        <input type="text" name="destination_country" value="{{ $plan->country->name }}" readonly>
+                                        <select name="destination_country" class="form-select" required>
+                                            <option value="">{{ __('Select Destination Country') }}</option>
+                                            @foreach($plan->country_ids ?? [] as $countryId)
+                                                @php
+                                                    $country = \App\Models\Country::find($countryId);
+                                                @endphp
+                                                @if($country)
+                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

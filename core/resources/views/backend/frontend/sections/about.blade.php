@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row align-items-center gy-4">
       <div class="col-lg-6 pe-xxl-5">
-        <img src="assets/images/about.png" alt="image" class="about-img">
+        <img src="{{ getFile('frontend', frontendImage('about_main_image', 'about.png')) }}" alt="image" class="about-img">
       </div>
       <div class="col-lg-6">
         <span class="section-caption"><i class="fa-solid fa-plane-departure"></i> {{ __("About Us") }}</span>

@@ -46,7 +46,6 @@ $countries = \App\Models\Country::active()->get();
                         <div class="visa-package" <?php echo e($plan->is_recommended ? "data-title=Recommended" : ''); ?>>
                             <h3 class="title mb-0"><?php echo e($plan->title); ?></h3>
                             <p><?php echo e($plan->heading); ?></p>
-                            <span class="visa-package-country"><?php echo e(__("Visa for")); ?>: <?php echo e($plan->country->name); ?></span>
                             <h4 class="price"><?php echo e(number_format($plan->price, 2).' '.$general->site_currency); ?>
 
                             </h4>
@@ -70,7 +69,6 @@ $countries = \App\Models\Country::active()->get();
                         <div class="visa-package" <?php echo e($plan->is_recommended ? "data-title=Recommended" : ''); ?>>
                             <h3 class="title mb-0"><?php echo e($plan->title); ?></h3>
                             <p><?php echo e($plan->heading); ?></p>
-                            <span class="visa-package-country"><?php echo e(__("Visa for")); ?>: <?php echo e($plan->country->name); ?></span>
                             <h4 class="price"><?php echo e(number_format($plan->price, 2).' '.$general->site_currency); ?>
 
                             </h4>

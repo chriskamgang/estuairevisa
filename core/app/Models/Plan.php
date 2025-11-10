@@ -19,9 +19,4 @@ class Plan extends Model
     {
         return $query->where('status',1);
     }
-    
-    function country()
-    {
-        return $this->belongsTo(Country::class,'for_country')->withDefault();
-    }
 }

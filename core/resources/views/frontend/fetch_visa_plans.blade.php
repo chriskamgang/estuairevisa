@@ -10,7 +10,6 @@ $multiPlans = $plans->where('plan_type', 'multiple_entry');
             <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
                 <h4 class="title mb-0">{{ $plan->title }}</h4>
                 <p>{{ $plan->heading }}</p>
-                        <span class="visa-package-country">{{ __("Visa for") }}: {{$plan->country->name}}</span>
                 <h3 class="price">{{ number_format($plan->price, 2) . ' ' . $general->site_currency }}
                 </h3>
                 <p>{{$plan->short_description}}</p>
@@ -34,7 +33,6 @@ $multiPlans = $plans->where('plan_type', 'multiple_entry');
             <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
                 <h4 class="title mb-0">{{ $plan->title }}</h4>
                 <p>{{ $plan->heading }}</p>
-                        <span class="visa-package-country">{{ __("Visa for") }}: {{$plan->country->name}}</span>
                 <h3 class="price">{{ number_format($plan->price, 2) . ' ' . $general->site_currency }}
                 </h3>
                 <p>{{$plan->short_description}}</p>

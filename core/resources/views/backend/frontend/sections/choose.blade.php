@@ -8,28 +8,28 @@
         <div class="row gy-4 mt-3">
           <div class="col-sm-6">
             <div class="choose-item">
-              <img src="assets/images/choose/1.png" alt="image">
+              <img src="{{ getFile('frontend', frontendImage('choose_icon_1', 'choose/1.png')) }}" alt="image">
               <h3 class="title h5">{{__("Fast & Hassle-Free")}}</h3>
               <p>{{__("Eligendi quod, eius cumque reiciendis excepturi adipisci dolorem ut earum consectetur maxime, aliquid.")}}</p>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="choose-item">
-              <img src="assets/images/choose/2.png" alt="image">
+              <img src="{{ getFile('frontend', frontendImage('choose_icon_2', 'choose/2.png')) }}" alt="image">
               <h3 class="title h5">{{__("Expert Support Team")}}</h3>
               <p>{{__("Eligendi quod, eius cumque reiciendis excepturi adipisci dolorem ut earum consectetur maxime, aliquid.")}}</p>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="choose-item">
-              <img src="assets/images/choose/3.png" alt="image">
+              <img src="{{ getFile('frontend', frontendImage('choose_icon_3', 'choose/3.png')) }}" alt="image">
               <h3 class="title h5">{{__("Secure & Confidential")}}</h3>
               <p>{{__("Eligendi quod, eius cumque reiciendis excepturi adipisci dolorem ut earum consectetur maxime, aliquid.")}}</p>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="choose-item">
-              <img src="assets/images/choose/4.png" alt="image">
+              <img src="{{ getFile('frontend', frontendImage('choose_icon_4', 'choose/4.png')) }}" alt="image">
               <h3 class="title h5">{{__("High Approval Rate")}}</h3>
               <p>{{__("Eligendi quod, eius cumque reiciendis excepturi adipisci dolorem ut earum consectetur maxime, aliquid.")}}</p>
             </div>
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <img src="assets/images/why-choose.png" alt="image" class="choose-thumb">
+        <img src="{{ getFile('frontend', frontendImage('choose_main_image', 'why-choose.png')) }}" alt="image" class="choose-thumb">
       </div>
     </div>
   </div>

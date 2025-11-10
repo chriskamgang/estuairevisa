@@ -119,6 +119,13 @@ Note: Test directory structure exists (configured in `phpunit.xml`) but no test 
 - User routes: Middleware `auth`, `verified`, `google2fa`
 - Payment gateway routes: Organized by provider in `Gateway/` namespace
 
+### API Structure
+
+- **API Authentication**: Laravel Sanctum for token-based authentication
+- **API Routes**: Defined in `routes/api.php` (currently minimal, mainly `/api/user` endpoint)
+- **API Middleware**: `auth:sanctum` for protected endpoints
+- API responses follow standard Laravel JSON response format
+
 ### Authentication & Authorization
 
 - Multiple auth guards: `admin` and `web` (users)
@@ -155,7 +162,35 @@ Static assets are physically separated in `/asset/`:
 - Dynamic language management via `Language` model
 - JSON-based translations in `resources/views/all.json` and `sections.json`
 
+### Push Notifications & Messaging
+
+The system includes multiple notification channels:
+
+- **Firebase Cloud Messaging (FCM)**: Push notifications to web/mobile clients
+  - Configuration in `config/firebase.php`
+  - Service worker: `public/firebase-messaging-sw.js`
+  - User FCM tokens stored in `users.fcm_token` column
+  - Helper function: `sendFCMNotification($user, $title, $body, $data, $url)` in `app/Http/Helpers/helpers.php:499`
+- **WhatsApp Integration**: SMS/WhatsApp messaging via helper function
+  - Helper function: `sendWhatsApp($phoneNumber, $message)` in `app/Http/Helpers/helpers.php:438`
+- **Email Notifications**: Template-based email system
+  - Managed via `EmailTemplate` model and admin panel
+- **Notification Order**: FCM notifications are sent before WhatsApp with a 5-second delay (as per recent commits)
+
+**Notification Flow:**
+1. User registers/updates preferences → FCM token saved via `/save-fcm-token` route
+2. Admin triggers notification → `sendFCMNotification()` helper called
+3. System sends FCM push first, then WhatsApp after delay
+4. Notifications logged in Laravel notification system (`app/Notifications/`, `app/Listeners/`)
+
 ## Environment Setup
+
+**Requirements:**
+- PHP ^8.2 (as specified in composer.json)
+- MySQL/MariaDB database
+- Node.js and NPM for asset compilation
+
+**Configuration:**
 
 1. Copy `.env.example` to `.env` in the `/core/` directory
 2. Configure database credentials:
@@ -188,5 +223,5 @@ Static assets are physically separated in `/asset/`:
   - `verified` - Email verification check
   - `LanguageManager` - Handles multi-language support
   - `CheckStatus` - Validates user account status
-- **No Migrations**: Database schema is in `/install/database.sql`. Use seeders in `/core/database/seeders/` for data population
+- **Migrations**: Primary database schema is in `/install/database.sql`. Some feature-specific migrations exist in `/core/database/migrations/` (e.g., FCM token support). Run both installation SQL and `php artisan migrate` for full setup
 - **Models**: No `Visa` model file exists; visa data is handled through other models (`VisaFileField`, `VisaStatusLog`) and database queries

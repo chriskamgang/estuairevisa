@@ -669,3 +669,12 @@ function getFirebaseAccessToken($credentials)
         return null;
     }
 }
+
+
+
+// Get frontend image by key
+if (!function_exists('frontendImage')) {
+    function frontendImage($key, $default = null) {
+        return \App\Models\FrontendImage::getByKey($key, $default);
+    }
+}

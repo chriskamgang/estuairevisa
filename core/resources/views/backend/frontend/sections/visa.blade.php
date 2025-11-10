@@ -98,7 +98,6 @@ $content = content('visa.content');
                                 <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
                                     <h3 class="title mb-0">{{ $plan->title }}</h3>
                                     <p>{{ $plan->heading }}</p>
-                                    <p>{{$plan->country->name}}</p>
                                     <h4 class="price">{{ number_format($plan->price, 2).' '.$general->site_currency }}
                                     </h4>
                                     <p>{{$plan->short_description}}</p>
@@ -123,7 +122,6 @@ $content = content('visa.content');
                                 <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
                                     <h3 class="title mb-0">{{ $plan->title }}</h3>
                                     <p>{{ $plan->heading }}</p>
-                                    <p>{{$plan->country->name}}</p>
                                     <h4 class="price">{{ number_format($plan->price, 1).' '.$general->site_currency}}
                                     </h4>
                                     <p>{{$plan->short_description}}</p>

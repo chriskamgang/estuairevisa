@@ -26,7 +26,7 @@
                                 <tr>
                                     <td>{{ $plan->title }}</td>
                                     <td><span class="badge badge-info">{{ ucfirst(str_replace('_', ' ', $plan->plan_type)) }}</span></td>
-                                    <td>${{ number_format($plan->price, 2) }}</td>
+                                    <td>{{ number_format($plan->price, 2) }} {{ $general->site_currency ?? 'FCFA' }}</td>
                                     <td>
                                         @if ($plan->status)
                                             <span class="badge badge-success">{{ __('Active') }}</span>

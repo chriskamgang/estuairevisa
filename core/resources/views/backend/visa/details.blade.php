@@ -34,7 +34,7 @@
                 
                 <div class="col-md-6">
                     <h6 class="text-md">{{ __("Applied for") }}</h6>
-                    <p>{{ $visa->plan->country->name }}</p>
+                    <p>{{ isset($visa->personal_info->destination_country) ? \App\Models\Country::find($visa->personal_info->destination_country)->name ?? 'N/A' : 'N/A' }}</p>
                 </div>
             </div>
 
