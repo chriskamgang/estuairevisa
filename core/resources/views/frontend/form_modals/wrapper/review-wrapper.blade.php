@@ -70,12 +70,8 @@
                                             <span>{{$data['personal_info']['email_address']}}</span>
                                         </li>
                                         <li class="list-group-item d-flex align-items-center justify-content-between gap-2">
-                                            <span class="fw-semibold">{{__("From")}}:</span>
+                                            <span class="fw-semibold">{{__("Destination Country")}}:</span>
                                             <span>{{$from->name}}</span>
-                                        </li>
-                                        <li class="list-group-item d-flex align-items-center justify-content-between gap-2">
-                                            <span class="fw-semibold">{{__("Live in")}}:</span>
-                                            <span>{{$live->name}}</span>
                                         </li>
                                         <li class="list-group-item d-flex align-items-center justify-content-between gap-2">
                                             <span class="fw-semibold">{{__("Passport No")}}:</span>

@@ -143,7 +143,7 @@
                 email_address: $('input[name="email_address"]').val(),
                 first_name: $('input[name="first_name"]').val(),
                 last_name: $('input[name="last_name"]').val(),
-                destination_country: $('input[name="destination_country"]').val(),
+                destination_country: $('select[name="destination_country"]').val(),
                 passport_number: $('input[name="passport_number"]').val(),
                 profession: $('input[name="profession"]').val(),
                 travel_date: $('input[name="travel_date"]').val(),

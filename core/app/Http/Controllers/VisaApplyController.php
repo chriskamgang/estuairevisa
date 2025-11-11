@@ -197,8 +197,10 @@ class VisaApplyController extends Controller
         $data = session('apply_infos');
 
         $plan = Plan::find($data['plan_id']);
-        $from = Country::find($data['from_id']);
-        $live = Country::find($data['live_id']);
+        // Utiliser le pays de destination choisi par l'utilisateur
+        $destinationCountryId = $session['personal_info']['destination_country'];
+        $from = Country::find($destinationCountryId);
+        $live = Country::find($destinationCountryId);
         $plans = Plan::active()->get();
 
 
@@ -217,8 +219,16 @@ class VisaApplyController extends Controller
 
 
         $plan = Plan::find($session['plan_id']);
+        // Récupérer le pays de destination
+        $destinationCountryId = $session['personal_info']['destination_country'] ?? null;
+        $destinationCountry = $destinationCountryId ? Country::find($destinationCountryId) : null;
+
         $checkout_data = session('checkout_data', []);
-        $checkout_data['items'][$session['trx']] = ['session_info' => $session, 'plan' => $plan];
+        $checkout_data['items'][$session['trx']] = [
+            'session_info' => $session,
+            'plan' => $plan,
+            'destination_country' => $destinationCountry
+        ];
         session()->put('checkout_data', $checkout_data);
 
         $checkout_data = collect($checkout_data);

@@ -39,12 +39,12 @@
                                                 <td>
                                                     <div class="fw-semibold text-nowrap">{{ $data['plan']->title }}</div>
                                                     <div class="text-muted small">
-                                                        
+
                                                           {{ ucwords(str_replace('_', ' ', $data['plan']->plan_type)) }}
-                                                     
+
                                                     </div>
                                                 </td>
-                                                <td>{{ $data['plan']->country->name }}</td>
+                                                <td>{{ $data['destination_country']->name ?? 'N/A' }}</td>
                                                 <td class="text-nowrap">{{ number_format($data['plan']->price, 2) }} {{$general->site_currency}}</td>
                                                 <td>
                                                     <a href="{{route('visa.cart.remove',$trx)}}" class="btn btn-sm btn-danger">
