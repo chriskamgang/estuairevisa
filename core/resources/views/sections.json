@@ -32,7 +32,9 @@
     "featured": {
         "element": {
             "image": "file",
-            "title": "text"
+            "title": "text",
+            "short_description": "textarea",
+            "description": "textarea_nic"
         }
     },
     "airline": {
