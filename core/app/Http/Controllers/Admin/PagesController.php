@@ -144,8 +144,13 @@ class PagesController extends Controller
                 try {
                     $viewPath = 'backend.frontend.sections.' . $key;
                     if (view()->exists($viewPath)) {
+                        $html = view($viewPath)->render();
+                        // Supprimer les balises <script> et <style> pour le page builder
+                        $html = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $html);
+                        $html = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', '', $html);
+
                         $data['contents'][$key] = [
-                            'html' => view($viewPath)->render(),
+                            'html' => $html,
                             'icon' => $section['others']['icon'] ?? ""
                         ];
                     } else {
