@@ -37,7 +37,7 @@ class ManageSectionController extends Controller
 
         $data['elements'] = SectionData::when($search, function ($query) use ($search) {
             return $query->where('data->heading', 'LIKE', '%' . $search . '%');
-        })->where('key', "$request->name.element")->latest()->paginate();
+        })->where('key', "$request->name.element")->latest()->paginate(50);
 
         return view('backend.frontend.index')->with($data);
     }

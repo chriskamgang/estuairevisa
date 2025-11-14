@@ -363,7 +363,7 @@ function content($key)
     });
 }
 
-function element($key, $take = 10)
+function element($key, $take = 100)
 {
     return Cache::remember("section_data_element_{$key}_take_{$take}", now()->addMinutes(10), function () use ($key, $take) {
         return SectionData::where('key', $key)->take($take)->get();
