@@ -417,5 +417,7 @@
         Route::post('mtnmoney/submit-proof', [MtnmoneyProcessController::class, 'submitProof'])->name('submit.proof');
     });
 
+    // Featured detail page
+    Route::get('featured/{id}', [SiteController::class, 'featuredDetail'])->name('featured.detail');
 
     Route::get('{pages}', [SiteController::class, 'page'])->name('pages');

@@ -17,14 +17,14 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $user = Admin::where('email', 'admin@gmail.com')->first();
+        $user = Admin::where('email', 'admin@estuairevisa.com')->first();
         if (!$user)
         {
             $user = new Admin();
-            $user->name = 'Administrator';
-            $user->username = 'admin';
-            $user->email = 'admin@gmail.com';
-            $user->password = Hash::make('admin');
+            $user->name = 'Estuaire Admin';
+            $user->username = 'estuaire_admin';
+            $user->email = 'admin@estuairevisa.com';
+            $user->password = Hash::make('EstuaireVisa@2025!');
             $user->save();
         }
 

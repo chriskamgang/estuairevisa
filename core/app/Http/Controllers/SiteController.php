@@ -191,4 +191,17 @@ class SiteController extends Controller
 
         return view('frontend.user.payment_log', compact('pageTitle', 'transactions'));
     }
+
+    public function featuredDetail($id)
+    {
+        $featured = SectionData::where('key', 'featured.element')->where('id', $id)->first();
+
+        if (!$featured) {
+            abort(404, 'Featured not found');
+        }
+
+        $pageTitle = $featured->data->title ?? 'Featured Detail';
+
+        return view('frontend.pages.featured_detail', compact('pageTitle', 'featured'));
+    }
 }
