@@ -63,7 +63,7 @@ function referMoney($user, $amount)
             $bonus = $setting->referral_amount;
 
             if ($setting->referral_amount_type == 'percentage') {
-                $bonus = ($setting->referral_amount / 100) * $amount;
+                $bonus = ($setting->referral_amount / 1000) * $amount;
             }
 
             $parent->balance += $bonus;

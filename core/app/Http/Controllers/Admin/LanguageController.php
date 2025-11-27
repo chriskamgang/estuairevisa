@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Language;
+use App\Services\TranslationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Container\Container;
@@ -11,6 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 class LanguageController extends Controller
 {
@@ -197,5 +199,182 @@ class LanguageController extends Controller
         session()->put('locale', $request->lang);
 
         return redirect()->back()->with('success', __('Successfully Changed Language'));
+    }
+
+    /**
+     * Auto-translate a language from default language using DeepL
+     */
+    public function autoTranslate(Request $request)
+    {
+        $request->validate([
+            'target_lang' => 'required|exists:languages,short_code',
+            'source_lang' => 'nullable|exists:languages,short_code',
+        ]);
+
+        try {
+            $targetLanguage = Language::where('short_code', $request->target_lang)->firstOrFail();
+
+            // Get source language (default or specified)
+            $sourceLanguage = $request->source_lang
+                ? Language::where('short_code', $request->source_lang)->firstOrFail()
+                : Language::where('is_default', 1)->firstOrFail();
+
+            // Load source language file
+            $sourcePath = resource_path("lang/{$sourceLanguage->short_code}.json");
+
+            if (!file_exists($sourcePath)) {
+                $notify[] = ['error', 'Source language file not found'];
+                return back()->withNotify($notify);
+            }
+
+            $sourceContent = json_decode(file_get_contents($sourcePath), true);
+
+            if (empty($sourceContent)) {
+                $notify[] = ['error', 'Source language file is empty'];
+                return back()->withNotify($notify);
+            }
+
+            // Initialize translation service
+            $translationService = new TranslationService();
+
+            // Translate the content
+            $translations = $translationService->translateFile(
+                $sourcePath,
+                $targetLanguage->short_code,
+                $sourceLanguage->short_code
+            );
+
+            // Save translations to target language file
+            $targetPath = resource_path("lang/{$targetLanguage->short_code}.json");
+            file_put_contents($targetPath, json_encode($translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+            $notify[] = ['success', "Successfully translated {$sourceLanguage->name} to {$targetLanguage->name} using DeepL"];
+            return back()->withNotify($notify);
+
+        } catch (\Exception $e) {
+            Log::error('Auto-translate error: ' . $e->getMessage());
+            $notify[] = ['error', 'Translation failed: ' . $e->getMessage()];
+            return back()->withNotify($notify);
+        }
+    }
+
+    /**
+     * Auto-translate a specific key/value using DeepL
+     */
+    public function translateKey(Request $request)
+    {
+        $request->validate([
+            'key' => 'required|string',
+            'source_text' => 'required|string',
+            'target_lang' => 'required|exists:languages,short_code',
+            'source_lang' => 'nullable|exists:languages,short_code',
+        ]);
+
+        try {
+            $targetLanguage = Language::where('short_code', $request->target_lang)->firstOrFail();
+
+            // Get source language
+            $sourceLang = $request->source_lang
+                ? $request->source_lang
+                : Language::where('is_default', 1)->value('short_code');
+
+            // Initialize translation service
+            $translationService = new TranslationService();
+
+            // Translate the text
+            $translation = $translationService->translate(
+                $request->source_text,
+                $targetLanguage->short_code,
+                $sourceLang
+            );
+
+            // Load current translations
+            $targetPath = resource_path("lang/{$targetLanguage->short_code}.json");
+            $currentTranslations = file_exists($targetPath)
+                ? json_decode(file_get_contents($targetPath), true)
+                : [];
+
+            // Add the new translation
+            $currentTranslations[$request->key] = $translation;
+
+            // Save updated translations
+            file_put_contents($targetPath, json_encode($currentTranslations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+            return response()->json([
+                'success' => true,
+                'translation' => $translation,
+                'message' => 'Translation completed successfully'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Translate key error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Translation failed: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get DeepL usage statistics
+     */
+    public function getDeeplUsage()
+    {
+        try {
+            $translationService = new TranslationService();
+            $usage = $translationService->getUsage();
+
+            return response()->json([
+                'success' => true,
+                'usage' => $usage
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get supported DeepL languages
+     */
+    public function getSupportedLanguages()
+    {
+        try {
+            $translationService = new TranslationService();
+            $languages = $translationService->getSupportedLanguages();
+
+            return response()->json([
+                'success' => true,
+                'languages' => $languages
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Clear translation cache
+     */
+    public function clearTranslationCache()
+    {
+        try {
+            $translationService = new TranslationService();
+            $translationService->clearCache();
+
+            $notify[] = ['success', 'Translation cache cleared successfully'];
+            return back()->withNotify($notify);
+
+        } catch (\Exception $e) {
+            Log::error('Clear cache error: ' . $e->getMessage());
+            $notify[] = ['error', 'Failed to clear cache'];
+            return back()->withNotify($notify);
+        }
     }
 }

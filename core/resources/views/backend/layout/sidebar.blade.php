@@ -252,6 +252,11 @@
                         <a class="nav-link" href="{{ route('admin.general.socialite') }}">{{ __('Socialite Setting')
                             }}</a>
                     </li>
+                    <li class="{{ $subNavDeeplActiveClass ?? '' }}">
+                        <a class="nav-link" href="{{ route('admin.general.deepl') }}">
+                            <i class="fa fa-language"></i> {{ __('DeepL Translation API') }}
+                        </a>
+                    </li>
                     <li class="{{ $subNavCookieActiveClass ?? '' }}">
                         <a class="nav-link" href="{{ route('admin.general.cookie') }}">{{ __('Cookie Consent') }}</a>
                     </li>

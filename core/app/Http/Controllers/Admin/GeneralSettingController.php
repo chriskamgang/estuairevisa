@@ -374,4 +374,65 @@ class GeneralSettingController extends Controller
 
         return back()->with('success', 'Caches cleared successfully!');
     }
+
+    /**
+     * Show DeepL API configuration page
+     */
+    public function deepl()
+    {
+        $data['pageTitle'] = 'DeepL Translation API Setting';
+        $data['navGeneralSettingsActiveClass'] = 'active';
+        $data['subNavDeeplActiveClass'] = 'active';
+        $data['general'] = GeneralSetting::first();
+
+        // Get DeepL usage if API key is configured
+        if ($data['general']->deepl_api_key && $data['general']->deepl_status) {
+            try {
+                $translationService = new \App\Services\TranslationService();
+                $data['deeplUsage'] = $translationService->getUsage();
+            } catch (\Exception $e) {
+                $data['deeplUsage'] = null;
+                $data['deeplError'] = $e->getMessage();
+            }
+        }
+
+        return view('backend.setting.deepl')->with($data);
+    }
+
+    /**
+     * Update DeepL API configuration
+     */
+    public function deeplUpdate(Request $request)
+    {
+        $request->validate([
+            'deepl_api_key' => 'nullable|string',
+            'deepl_api_type' => 'required|in:free,pro',
+            'deepl_status' => 'nullable|boolean',
+        ]);
+
+        $setting = GeneralSetting::first();
+        $setting->deepl_api_key = $request->deepl_api_key;
+        $setting->deepl_api_type = $request->deepl_api_type;
+        $setting->deepl_status = $request->deepl_status ? 1 : 0;
+        $setting->save();
+
+        // Test the API key if provided and status is enabled
+        if ($request->deepl_api_key && $request->deepl_status) {
+            try {
+                // Clear config cache to use new values
+                \Artisan::call('config:clear');
+
+                $translationService = new \App\Services\TranslationService();
+                $usage = $translationService->getUsage();
+
+                $notify[] = ['success', 'DeepL API settings updated successfully! Current usage: ' . $usage['character_count'] . ' / ' . $usage['character_limit'] . ' characters.'];
+            } catch (\Exception $e) {
+                $notify[] = ['warning', 'Settings saved but API key test failed: ' . $e->getMessage()];
+            }
+        } else {
+            $notify[] = ['success', 'DeepL API settings updated successfully!'];
+        }
+
+        return back()->withNotify($notify);
+    }
 }

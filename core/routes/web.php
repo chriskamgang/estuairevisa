@@ -132,6 +132,8 @@
             Route::get('general/socialite/', [GeneralSettingController::class, 'socialite'])->name('general.socialite');
             Route::post('general/socialite', [GeneralSettingController::class, 'socialiteUpdate']);
 
+            Route::get('general/deepl', [GeneralSettingController::class, 'deepl'])->name('general.deepl');
+            Route::post('general/deepl', [GeneralSettingController::class, 'deeplUpdate']);
 
             Route::get('general/seo/manage', [GeneralSettingController::class, 'seoManage'])->name('general.seo');
             Route::post('general/seo/manage', [GeneralSettingController::class, 'seoManageUpdate']);
@@ -190,6 +192,14 @@
             Route::post('import/{lang}', [LanguageController::class, 'import'])->name('import');
 
             Route::get('changeLang', [LanguageController::class, 'changeLang'])->name('changeLang');
+
+            // DeepL Translation Routes
+            Route::post('language/auto-translate', [LanguageController::class, 'autoTranslate'])->name('language.auto.translate');
+            Route::post('language/translate-key', [LanguageController::class, 'translateKey'])->name('language.translate.key');
+            Route::get('language/deepl-usage', [LanguageController::class, 'getDeeplUsage'])->name('language.deepl.usage');
+            Route::get('language/supported-languages', [LanguageController::class, 'getSupportedLanguages'])->name('language.supported');
+            Route::post('language/clear-cache', [LanguageController::class, 'clearTranslationCache'])->name('language.clear.cache');
+
             Route::get('subscribers', [HomeController::class, 'subscribers'])->name('subscribers');
 
             Route::get('pages/index', [PagesController::class, 'index'])->name('frontend.pages');

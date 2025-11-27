@@ -148,6 +148,7 @@ Each gateway has its own controller directory in `app/Http/Controllers/Gateway/`
 - **Visa System**: `visas`, `visa_file_fields`, `visa_status_logs` tables track visa types, required documents, and application status
 - **Payments**: `checkouts`, `checkout_logs`, `payments`, `transactions`, `deposits` track payment flows
 - **Configuration**: `general_settings`, `countries`, `plans`, `gateways` store app configuration
+- **User System**: Includes referral tracking with hierarchical user relationships (parent-child structure)
 
 ### Frontend/Backend Asset Separation
 
@@ -173,8 +174,12 @@ The system includes multiple notification channels:
   - Helper function: `sendFCMNotification($user, $title, $body, $data, $url)` in `app/Http/Helpers/helpers.php:499`
 - **WhatsApp Integration**: SMS/WhatsApp messaging via helper function
   - Helper function: `sendWhatsApp($phoneNumber, $message)` in `app/Http/Helpers/helpers.php:438`
+- **SMS Providers**: Multiple SMS gateway integrations
+  - Nexmo (Vonage) - configured via `nexmo/laravel` package
+  - Infobip - configured via `pnlinh/laravel-infobip-sms` package
 - **Email Notifications**: Template-based email system
   - Managed via `EmailTemplate` model and admin panel
+  - Helper functions: `sendMail($key, $data, $user)` and `sendGeneralMail($data)`
 - **Notification Order**: FCM notifications are sent before WhatsApp with a 5-second delay (as per recent commits)
 
 **Notification Flow:**
@@ -182,6 +187,43 @@ The system includes multiple notification channels:
 2. Admin triggers notification → `sendFCMNotification()` helper called
 3. System sends FCM push first, then WhatsApp after delay
 4. Notifications logged in Laravel notification system (`app/Notifications/`, `app/Listeners/`)
+
+### Key Helper Functions
+
+Global helper functions in `app/Http/Helpers/helpers.php` (auto-loaded):
+
+- **File Management**:
+  - `uploadImage($file, $location, $size, $old, $thumb)` - Upload and resize images (uses Intervention Image)
+  - `makeDirectory($path)` - Create directories with proper permissions
+  - `removeFile($path)` - Delete files safely
+  - `getFile($folder_name, $filename)` - Retrieve file URLs
+  - `filePath($folder_name)` - Get file storage paths
+
+- **Content & Data**:
+  - `content($key)` - Retrieve dynamic content from database
+  - `element($key, $take)` - Get content elements with limit
+  - `frontendFormatter($key)` - Format frontend content keys
+  - `convertHtml($content)` - HTML purification (uses Mews Purifier)
+  - `replaceBaseUrl($content)` - Update URLs in content
+  - `variableReplacer($code, $value, $template)` - Template variable replacement
+
+- **User & Referral System**:
+  - `getUserWithChildren($userId)` - Get user hierarchy (referral tree)
+  - `referMoney($user, $amount)` - Process referral commissions
+
+- **UI & Navigation**:
+  - `getMenus($type)` - Retrieve header/footer menus
+  - `menuActive($routeName)` - Highlight active menu items
+
+- **Utilities**:
+  - `verificationCode($length)` - Generate verification codes
+  - `gatewayImagePath()` - Get payment gateway image paths
+  - `nonEditableRender($file)` - Render non-editable templates
+
+### Social Media & Sharing
+
+- Uses `jorenvanhocht/laravel-share` package for social media sharing
+- Cookie consent managed via `spatie/laravel-cookie-consent`
 
 ## Environment Setup
 
@@ -225,3 +267,6 @@ The system includes multiple notification channels:
   - `CheckStatus` - Validates user account status
 - **Migrations**: Primary database schema is in `/install/database.sql`. Some feature-specific migrations exist in `/core/database/migrations/` (e.g., FCM token support). Run both installation SQL and `php artisan migrate` for full setup
 - **Models**: No `Visa` model file exists; visa data is handled through other models (`VisaFileField`, `VisaStatusLog`) and database queries
+- **Image Processing**: Uses `intervention/image` package for image uploads, resizing, and thumbnail generation. All image operations go through the `uploadImage()` helper
+- **Security**: HTML content is sanitized using `mews/purifier` package via the `convertHtml()` helper to prevent XSS attacks
+- **QR Codes**: Two-factor authentication QR codes generated using `bacon/bacon-qr-code` package
