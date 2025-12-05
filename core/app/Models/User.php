@@ -55,4 +55,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Payment::class,'user_id');
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(UserNotification::class)->latest();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany(UserNotification::class)->where('read', false);
+    }
 }

@@ -21,10 +21,28 @@
 
                                 <input type="hidden" name="section" value="{{ request()->name }}">
 
-                                <div class="row">
+                                <!-- Translation Tabs -->
+                                <ul class="nav nav-pills mb-4" id="translationTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="en-tab" data-toggle="pill" href="#en" role="tab">
+                                            <i class="fas fa-flag-usa"></i> English
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="fr-tab" data-toggle="pill" href="#fr" role="tab">
+                                            <i class="fas fa-flag"></i> Français
+                                        </a>
+                                    </li>
+                                </ul>
 
-                                    @foreach ($section as $key => $sec)
-                                        @if ($sec == 'on')
+                                <div class="tab-content" id="translationTabContent">
+                                    <!-- English Tab -->
+                                    <div class="tab-pane fade show active" id="en" role="tabpanel">
+                                        <h5 class="mb-3">{{ __('English Content') }}</h5>
+                                        <div class="row">
+
+                                            @foreach ($section as $key => $sec)
+                                                @if ($sec == 'on')
                                             <div class="form-group col-md-6">
 
                                                 <label for="">{{ __('Category Name') }}</label>
@@ -95,8 +113,40 @@
                                             </div>
                                         @endif
                                     @endforeach
-                                    <div class="form-group col-md-12">
+                                        </div>
+                                    </div>
 
+                                    <!-- French Tab -->
+                                    <div class="tab-pane fade" id="fr" role="tabpanel">
+                                        <h5 class="mb-3">{{ __('French Translation') }}</h5>
+                                        <div class="row">
+                                            @foreach ($section as $key => $sec)
+                                                @if ($sec == 'text')
+                                                    <div class="form-group col-md-6">
+                                                        <label for="">{{ __(frontendFormatter($key)) }} (FR)</label>
+                                                        <input type="text" name="translations[fr][{{ $key }}]"
+                                                            class="form-control">
+                                                    </div>
+                                                @elseif($sec == 'textarea')
+                                                    <div class="form-group col-md-12">
+                                                        <label for="">{{ __(frontendFormatter($key)) }} (FR)</label>
+                                                        <textarea name="translations[fr][{{ $key }}]"
+                                                            class="form-control"></textarea>
+                                                    </div>
+                                                @elseif($sec == 'textarea_nic')
+                                                    <div class="form-group col-md-12">
+                                                        <label for="">{{ __(frontendFormatter($key)) }} (FR)</label>
+                                                        <textarea name="translations[fr][{{ $key }}]"
+                                                            class="form-control summernote-fr"></textarea>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="form-group col-md-12">
                                         <button type="submit"
                                             class="btn btn-primary float-right">{{ __('Create') }}</button>
                                     </div>
@@ -115,7 +165,7 @@
             <script>
                 $(function() {
                     'use strict'
-                    $('.summernote').summernote();
+                    $('.summernote, .summernote-fr').summernote();
 
                     $('.iconpicker').iconpicker({
                         align: 'center', // Only in div tag

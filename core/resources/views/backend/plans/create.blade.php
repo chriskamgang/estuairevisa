@@ -27,30 +27,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Heading -->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>{{ __("Heading") }}</label>
-                                        <input type="text" name="heading" class="form-control" required>
-                                    </div>
-                                </div>
-
-                                <!-- Title -->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>{{ __("Title") }}</label>
-                                        <input type="text" name="title" class="form-control" required>
-                                    </div>
-                                </div>
-
-                                <!-- Short Description -->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>{{ __("Short Description") }}</label>
-                                        <input type="text" name="short_description" class="form-control" required>
-                                    </div>
-                                </div>
-
                                 <!-- Price -->
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -59,6 +35,80 @@
                                             required>
                                     </div>
                                 </div>
+
+                                <!-- Translation Tabs -->
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>{{ __("Translations") }}</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="nav nav-pills mb-3" id="translationTab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="en-tab" data-toggle="pill" href="#en" role="tab">
+                                                        <i class="fas fa-flag-usa"></i> English
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="fr-tab" data-toggle="pill" href="#fr" role="tab">
+                                                        <i class="fas fa-flag"></i> Français
+                                                    </a>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content" id="translationTabContent">
+                                                <!-- English Tab -->
+                                                <div class="tab-pane fade show active" id="en" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>{{ __("Title") }} (EN)</label>
+                                                                <input type="text" name="title" class="form-control" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>{{ __("Heading") }} (EN)</label>
+                                                                <input type="text" name="heading" class="form-control" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label>{{ __("Short Description") }} (EN)</label>
+                                                                <input type="text" name="short_description" class="form-control" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- French Tab -->
+                                                <div class="tab-pane fade" id="fr" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>{{ __("Title") }} (FR)</label>
+                                                                <input type="text" name="title_translations[fr]" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>{{ __("Heading") }} (FR)</label>
+                                                                <input type="text" name="heading_translations[fr]" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label>{{ __("Short Description") }} (FR)</label>
+                                                                <input type="text" name="short_description_translations[fr]" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">{{__("Available Countries")}}</label>

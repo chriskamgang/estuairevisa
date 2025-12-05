@@ -326,11 +326,31 @@
 
                 Route::get('profile/setting', [UserController::class, 'profile'])->name('profile');
                 Route::post('profile/setting', [UserController::class, 'profileUpdate'])->name('profileupdate');
+                Route::get('profile/stats', [UserController::class, 'profileWithStats'])->name('profile.stats');
                 Route::get('profile/change/password', [UserController::class, 'changePassword'])->name('change.password');
                 Route::post('profile/change/password', [UserController::class, 'updatePassword'])->name('update.password');
 
                 // Firebase Push Notifications
                 Route::post('save-fcm-token', [UserController::class, 'saveFCMToken'])->name('save.fcm.token');
+
+                // Favorites Management
+                Route::get('favorites', [UserController::class, 'favorites'])->name('favorites');
+                Route::post('favorites/add', [UserController::class, 'addFavorite'])->name('favorites.add');
+                Route::delete('favorites/{id}', [UserController::class, 'removeFavorite'])->name('favorites.remove');
+                Route::post('favorites/remove-multiple', [UserController::class, 'removeFavorites'])->name('favorites.remove.multiple');
+                Route::post('favorites/{id}/collection', [UserController::class, 'updateFavoriteCollection'])->name('favorites.update.collection');
+
+                // Reservations Management
+                Route::get('reservations', [UserController::class, 'reservations'])->name('reservations');
+                Route::post('reservations/{id}/cancel', [UserController::class, 'cancelReservation'])->name('reservations.cancel');
+
+                // Notifications Management
+                Route::get('notifications', [UserController::class, 'notificationCenter'])->name('notifications');
+                Route::post('notifications/{id}/read', [UserController::class, 'markNotificationAsRead'])->name('notifications.mark.read');
+                Route::post('notifications/{id}/unread', [UserController::class, 'markNotificationAsUnread'])->name('notifications.mark.unread');
+                Route::post('notifications/read-all', [UserController::class, 'markAllNotificationsAsRead'])->name('notifications.read.all');
+                Route::delete('notifications/{id}', [UserController::class, 'deleteNotification'])->name('notifications.delete');
+                Route::post('notifications/delete-read', [UserController::class, 'deleteReadNotifications'])->name('notifications.delete.read');
 
                 Route::resource('ticket', TicketController::class);
                 Route::post('ticket/reply', [TicketController::class, 'reply'])->name('ticket.reply');

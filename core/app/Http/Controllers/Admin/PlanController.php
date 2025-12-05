@@ -40,9 +40,17 @@ class PlanController extends Controller
             'price' => 'required|numeric|min:0',
             'status' => 'required|boolean',
             'is_recommended' => 'required|boolean',
+            'title_translations' => 'nullable|array',
+            'heading_translations' => 'nullable|array',
+            'short_description_translations' => 'nullable|array',
         ]);
 
         $validated['country_ids'] = collect($request->country_ids)->map(fn($id) => (int) $id)->toArray();
+
+        // Add English to translations
+        $validated['title_translations']['en'] = $request->title;
+        $validated['heading_translations']['en'] = $request->heading;
+        $validated['short_description_translations']['en'] = $request->short_description;
 
         Plan::create($validated);
 
@@ -72,8 +80,28 @@ class PlanController extends Controller
             'country_ids' => 'required|array',
             'status' => 'required|boolean',
             'is_recommended' => 'required|boolean',
+            'title_translations' => 'nullable|array',
+            'heading_translations' => 'nullable|array',
+            'short_description_translations' => 'nullable|array',
         ]);
         $validated['country_ids'] = collect($request->country_ids)->map(fn($id) => (int) $id)->toArray();
+
+        // Merge with existing translations and add English
+        $validated['title_translations'] = array_merge(
+            $plan->title_translations ?? [],
+            $request->title_translations ?? [],
+            ['en' => $request->title]
+        );
+        $validated['heading_translations'] = array_merge(
+            $plan->heading_translations ?? [],
+            $request->heading_translations ?? [],
+            ['en' => $request->heading]
+        );
+        $validated['short_description_translations'] = array_merge(
+            $plan->short_description_translations ?? [],
+            $request->short_description_translations ?? [],
+            ['en' => $request->short_description]
+        );
 
         $plan->update($validated);
 

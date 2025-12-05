@@ -678,3 +678,17 @@ if (!function_exists('frontendImage')) {
         return \App\Models\FrontendImage::getByKey($key, $default);
     }
 }
+
+/**
+ * Get translated value from SectionData element
+ * Usage: translate($element, 'title') or translate($element, 'description')
+ */
+if (!function_exists('translate')) {
+    function translate($element, $field, $locale = null) {
+        if (!$element || !($element instanceof \App\Models\SectionData)) {
+            return '';
+        }
+
+        return $element->getTranslated($field, $locale);
+    }
+}

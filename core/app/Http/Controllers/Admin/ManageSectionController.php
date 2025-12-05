@@ -182,9 +182,20 @@ class ManageSectionController extends Controller
             }
         }
 
+        // Prepare translations
+        $translations = $request->translations ?? [];
+
+        // Add English to translations
+        foreach ($data as $key => $value) {
+            if (!in_array($key, ['slug', 'image']) && !is_array($value)) {
+                $translations['en'][$key] = $value;
+            }
+        }
+
         SectionData::create([
             'key' => "$request->section.element",
-            'data' => $data
+            'data' => $data,
+            'translations' => $translations
         ]);
 
         clearcache();
@@ -271,8 +282,22 @@ class ManageSectionController extends Controller
             $data['slug'] = Str::slug($request->slug);
         }
 
+        // Prepare translations
+        $translations = array_merge(
+            $element->translations ?? [],
+            $request->translations ?? []
+        );
+
+        // Add English to translations
+        foreach ($data as $key => $value) {
+            if (!in_array($key, ['slug', 'image']) && !is_array($value)) {
+                $translations['en'][$key] = $value;
+            }
+        }
+
         $element->update([
-            'data' => $data
+            'data' => $data,
+            'translations' => $translations
         ]);
 
         clearcache();

@@ -23,12 +23,12 @@ $elements = element('testimonial.element');
         <div class="testimonial-slide">
           <div class="testimonial-item">
             <span class="icon"><i class="bi bi-quote"></i></span>
-            <p class="testimonial-details">{{ __($element->data->answer) }}</p>
+            <p class="testimonial-details">{{ translate($element, 'answer') }}</p>
 
             <div class="client">
               <img src="{{ getFile('testimonial', $element->data->image) }}" alt="image" class="thumb">
               <div class="content">
-                <h3 class="name">{{ $element->data->client_name }}</h3>
+                <h3 class="name">{{ translate($element, 'client_name') }}</h3>
                 <p class="mb-0 ratings">
                   @php
                   $notfill = 5 - $element->data->review;

@@ -35,10 +35,10 @@
                                     <li><i class="bi bi-calendar2-check"></i> {{ $blog->created_at->diffforhumans() }}</li>
                                     <li><i class="bi bi-chat"></i> {{ $comment }} {{ __('comments') }}</li>
                                 </ul>
-                                <h4 class="title"><a href="{{ route('blog', [$blog->id, Str::slug($blog->data->title)]) }}">{{ $blog->data->title }}</a>
+                                <h4 class="title"><a href="{{ route('blog', [$blog->id, Str::slug(translate($blog, 'title'))]) }}">{{ translate($blog, 'title') }}</a>
                                 </h4>
-                                <a href="{{ route('blog', [$blog->id, Str::slug($blog->data->title)]) }}" class="blog-btn"> 
-                                    <span>{{__('Read More')}}</span> 
+                                <a href="{{ route('blog', [$blog->id, Str::slug(translate($blog, 'title'))]) }}" class="blog-btn">
+                                    <span>{{__('Read More')}}</span>
                                     <i class="bi bi-arrow-up-right"></i>
                                 </a>
                             </div>
