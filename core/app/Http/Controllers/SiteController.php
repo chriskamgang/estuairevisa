@@ -176,6 +176,9 @@ class SiteController extends Controller
 
     public function changeLang($lang)
     {
+        // Normalize locale to lowercase for consistency
+        $lang = strtolower($lang);
+
         App::setLocale($lang);
 
         session()->put('locale', $lang);

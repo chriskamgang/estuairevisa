@@ -97,11 +97,11 @@ $countries = \App\Models\Country::active()->get();
                     @forelse($singlePlans as $plan)
                     <div class="col-lg-4 col-sm-6">
                         <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
-                            <h3 class="title mb-0">{{ $plan->title }}</h3>
-                            <p>{{ $plan->heading }}</p>
+                            <h3 class="title mb-0">{{ $plan->getTranslatedTitle() }}</h3>
+                            <p>{{ $plan->getTranslatedHeading() }}</p>
                             <h4 class="price">{{ number_format($plan->price, 2).' '.$general->site_currency}}
                             </h4>
-                            <p>{{$plan->short_description}}</p>
+                            <p>{{ $plan->getTranslatedShortDescription() }}</p>
                             <button type="button" class="package-btn fetch-country-btn"
                                 data-plan="{{route('visa.applay.start',$plan->id)}}">{{ __("Get Started")
                                 }}</button>
@@ -120,11 +120,11 @@ $countries = \App\Models\Country::active()->get();
                     @forelse($multiPlans as $plan)
                     <div class="col-lg-4 col-sm-6">
                         <div class="visa-package" {{$plan->is_recommended ? "data-title=Recommended" : ''}}>
-                            <h3 class="title mb-0">{{ $plan->title }}</h3>
-                            <p>{{ $plan->heading }}</p>
+                            <h3 class="title mb-0">{{ $plan->getTranslatedTitle() }}</h3>
+                            <p>{{ $plan->getTranslatedHeading() }}</p>
                             <h4 class="price">{{ number_format($plan->price, 2).' '.$general->site_currency }}
                             </h4>
-                            <p>{{$plan->short_description}}</p>
+                            <p>{{ $plan->getTranslatedShortDescription() }}</p>
                             <button type="button" class="package-btn fetch-country-btn"
                                 data-plan="{{route('visa.applay.start',$plan->id)}}">{{ __("Get Started")
                                 }}</button>

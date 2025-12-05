@@ -21,13 +21,13 @@
                                 <h4 class="accordion-header" id="heading-{{ $loop->iteration }}">
                                     <span class="accordion-button collapsed" data-bs-toggle="collapse"
                                         data-bs-target="#collapse{{ $loop->iteration }}" aria-expanded="false">
-                                        {{ __($item->data->question) }}
+                                        {{ translate($item, 'question') }}
                                     </span>
                                 </h4>
                                 <div id="collapse{{ $loop->iteration }}" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <p> {{ __($item->data->answer) }}</p>
+                                        <p>{{ translate($item, 'answer') }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -24,7 +24,7 @@
                 <div class="mt-sm-5 mt-4">
                     <div id="review-wrapper">
                         <div class="d-flex flex-wrap align-items-center gap-2 justify-content-sm-between justify-content-center mb-sm-5 mb-3">
-                            <p class="text-xl text-uppercase text-primary mb-0 plan_name">{{ $plan->title }}</p>
+                            <p class="text-xl text-uppercase text-primary mb-0 plan_name">{{ $plan->getTranslatedTitle() }}</p>
                             <p class="mb-0 d-flex align-items-center gap-2 justify-content-end">{{ __('Price') }}: <b
                                     class="text-dark text-xl plan_price">{{ number_format($plan->price, 2)." ".$general->site_currency }}</b></p>
                         </div>
@@ -35,7 +35,7 @@
                                 <select name="plan_id" class="form-select bg-white">
                                     @foreach($plans as $item)
                                     <option value="{{$item->id}}" {{$item->id == $plan->id ? 'selected' : ''}}
-                                        data-action="{{route('visa.plan.change',$item->id)}}" data-duration="{{$item->heading}}" data-title="{{$item->title}}" data-description="{{$item->short_description}}">{{$item->title}}
+                                        data-action="{{route('visa.plan.change',$item->id)}}" data-duration="{{$item->getTranslatedHeading()}}" data-title="{{$item->getTranslatedTitle()}}" data-description="{{$item->getTranslatedShortDescription()}}">{{$item->getTranslatedTitle()}}
                                         - {{ number_format($item->price,2)." ".$general->site_currency }}</option>
                                     @endforeach
                                 </select>
@@ -46,15 +46,15 @@
                                         
                                         <li class="list-group-item d-flex align-items-center justify-content-between gap-2">
                                             <span class="fw-semibold">{{__("Plan Name")}}:</span>
-                                            <span class="visa_title">{{$plan->title}}</span>
+                                            <span class="visa_title">{{$plan->getTranslatedTitle()}}</span>
                                         </li>
                                         <li class="list-group-item d-flex align-items-center justify-content-between gap-2">
                                             <span class="fw-semibold">{{__("Description")}}:</span>
-                                            <span class="visa_short_description">{{$plan->short_description}}</span>
+                                            <span class="visa_short_description">{{$plan->getTranslatedShortDescription()}}</span>
                                         </li>
                                             <li class="list-group-item d-flex align-items-center justify-content-between gap-2">
                                             <span class="fw-semibold">{{__("Duration")}}:</span>
-                                            <span class="visa_duration">{{$plan->heading}}</span>
+                                            <span class="visa_duration">{{$plan->getTranslatedHeading()}}</span>
                                         </li>
                                         <li class="list-group-item d-flex align-items-center justify-content-between gap-2">
                                             <span class="fw-semibold">{{__("Name")}}:</span>

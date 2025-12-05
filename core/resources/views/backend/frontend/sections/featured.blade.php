@@ -19,19 +19,15 @@
             data-gjs-propagate='["removable","editable","draggable","stylable"]'>
 
         @foreach($elements as $element)
-          @php
-              $description = $element->data->description ?? '';
-              $shortDescription = $element->data->short_description ?? '';
-          @endphp
           <div class="col">
             <a href="{{ route('featured.detail', $element->id) }}" class="featured-link">
               <div class="featured-on-item text-center" title="{{ __('Cliquez pour voir les détails') }}">
                 <div class="featured-image-wrapper mb-3">
-                  <img src="{{ getFile('featured', $element->data->image) }}" alt="{{ __($element->data->title) }}" class="featured-image">
+                  <img src="{{ getFile('featured', $element->data->image) }}" alt="{{ translate($element, 'title') }}" class="featured-image">
                 </div>
-                <h5 class="title mb-2">{{__($element->data->title)}}</h5>
-                @if(!empty($shortDescription))
-                  <p class="short-desc text-muted small">{{ __($shortDescription) }}</p>
+                <h5 class="title mb-2">{{ translate($element, 'title') }}</h5>
+                @if(translate($element, 'short_description'))
+                  <p class="short-desc text-muted small">{{ translate($element, 'short_description') }}</p>
                 @endif
                 <div class="mt-2">
                   <small class="text-primary"><i class="fas fa-info-circle"></i> {{ __('En savoir plus') }}</small>

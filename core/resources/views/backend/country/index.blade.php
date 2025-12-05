@@ -67,7 +67,7 @@
 
 
 <div class="modal fade" tabindex="-1" id="add" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <form action="{{ route('admin.country.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
@@ -76,10 +76,38 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>{{ __('Name') }}</label>
-                        <input type="text" name="name" class="form-control" required>
+                    <!-- Translation Tabs -->
+                    <ul class="nav nav-pills mb-3" id="addTranslationTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="add-en-tab" data-toggle="pill" href="#add-en" role="tab">
+                                <i class="fas fa-flag-usa"></i> English
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="add-fr-tab" data-toggle="pill" href="#add-fr" role="tab">
+                                <i class="fas fa-flag"></i> Français
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="addTranslationTabContent">
+                        <!-- English Tab -->
+                        <div class="tab-pane fade show active" id="add-en" role="tabpanel">
+                            <div class="form-group">
+                                <label>{{ __('Name') }} (EN)</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- French Tab -->
+                        <div class="tab-pane fade" id="add-fr" role="tabpanel">
+                            <div class="form-group">
+                                <label>{{ __('Name') }} (FR)</label>
+                                <input type="text" name="name_translations[fr]" class="form-control">
+                            </div>
+                        </div>
                     </div>
+
                     <div class="form-group">
                         <label>{{ __('Flag Image') }}</label>
                         <input type="file" name="image" class="form-control" required>
@@ -110,7 +138,7 @@
 
 
 <div class="modal fade" tabindex="-1" id="edit" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <form action="" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
@@ -119,10 +147,38 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>{{ __('Name') }}</label>
-                        <input type="text" name="name" class="form-control" required>
+                    <!-- Translation Tabs -->
+                    <ul class="nav nav-pills mb-3" id="editTranslationTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="edit-en-tab" data-toggle="pill" href="#edit-en" role="tab">
+                                <i class="fas fa-flag-usa"></i> English
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="edit-fr-tab" data-toggle="pill" href="#edit-fr" role="tab">
+                                <i class="fas fa-flag"></i> Français
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="editTranslationTabContent">
+                        <!-- English Tab -->
+                        <div class="tab-pane fade show active" id="edit-en" role="tabpanel">
+                            <div class="form-group">
+                                <label>{{ __('Name') }} (EN)</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- French Tab -->
+                        <div class="tab-pane fade" id="edit-fr" role="tabpanel">
+                            <div class="form-group">
+                                <label>{{ __('Name') }} (FR)</label>
+                                <input type="text" name="name_translations[fr]" class="form-control">
+                            </div>
+                        </div>
                     </div>
+
                     <div class="form-group">
                         <label>{{ __('Flag Image') }}</label>
                         <input type="file" name="image" class="form-control">
@@ -191,6 +247,11 @@
                 modal.find('input[name=name]').val(data.name)
                 modal.find('select[name=status]').val(data.status)
                 modal.find('select[name=is_slider]').val(data.is_slider)
+
+                // Fill translation fields
+                const translations = data.name_translations || {}
+                modal.find('input[name="name_translations[fr]"]').val(translations.fr || '')
+
                 modal.modal('show')
             })
 

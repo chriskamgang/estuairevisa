@@ -26,13 +26,13 @@
                         <div class="d-flex align-items-center">
                             <div class="featured-icon-wrapper me-3">
                                 <img src="{{ getFile('featured', $featured->data->image) }}"
-                                     alt="{{ __($featured->data->title) }}"
+                                     alt="{{ translate($featured, 'title') }}"
                                      class="featured-header-image">
                             </div>
                             <div>
-                                <h3 class="mb-0 text-white">{{ __($featured->data->title) }}</h3>
-                                @if(!empty($featured->data->short_description))
-                                    <p class="mb-0 mt-2 text-white-50">{{ __($featured->data->short_description) }}</p>
+                                <h3 class="mb-0 text-white">{{ translate($featured, 'title') }}</h3>
+                                @if(translate($featured, 'short_description'))
+                                    <p class="mb-0 mt-2 text-white-50">{{ translate($featured, 'short_description') }}</p>
                                 @endif
                             </div>
                         </div>
@@ -40,7 +40,7 @@
 
                     <div class="card-body p-4 p-md-5">
                         <div class="featured-content">
-                            {!! clean($featured->data->description ?? '') !!}
+                            {!! clean(translate($featured, 'description') ?: '') !!}
                         </div>
 
                         <div class="mt-5 text-center">

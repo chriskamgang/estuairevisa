@@ -103,7 +103,15 @@ class PlanController extends Controller
             ['en' => $request->short_description]
         );
 
-        $plan->update($validated);
+        // Update the plan
+        $plan->fill($validated);
+
+        // Force set translation fields explicitly to ensure they are saved
+        $plan->title_translations = $validated['title_translations'];
+        $plan->heading_translations = $validated['heading_translations'];
+        $plan->short_description_translations = $validated['short_description_translations'];
+
+        $plan->save();
 
         return redirect()->route('admin.plans.index')->with('success', 'Plan updated successfully.');
     }

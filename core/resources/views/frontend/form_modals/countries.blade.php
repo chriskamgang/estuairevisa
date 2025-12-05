@@ -15,9 +15,9 @@
                             <input type="text" name="i_am_from" value="" autocomplete="off">
                             <ul class="visa-country-list scroll-y">
                                 @forelse($countries as $country)
-                                <li data-value="{{$country->name}}" data-id="{{$country->id}}">
+                                <li data-value="{{$country->getTranslatedName()}}" data-id="{{$country->id}}">
                                     <img src="{{getFile('country',$country->image)}}" alt="image">
-                                    <span>{{$country->name}}</span>
+                                    <span>{{$country->getTranslatedName()}}</span>
                                 </li>
                                 @empty
                                 <li class="no-result">
@@ -40,9 +40,9 @@
 
                             <ul class="visa-country-list scroll-y">
                                 @forelse($countries as $country)
-                                <li data-value="{{$country->name}}" data-id="{{$country->id}}">
+                                <li data-value="{{$country->getTranslatedName()}}" data-id="{{$country->id}}">
                                     <img src="{{getFile('country',$country->image)}}" alt="image">
-                                    <span>{{$country->name}}</span>
+                                    <span>{{$country->getTranslatedName()}}</span>
                                 </li>
                                 @empty
                                 <li class="no-result">

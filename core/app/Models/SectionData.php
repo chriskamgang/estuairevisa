@@ -21,7 +21,7 @@ class SectionData extends Model
     public function getTranslated($field, $locale = null)
     {
         if (!$locale) {
-            $locale = session('lang', 'en');
+            $locale = session('locale', 'en');
         }
 
         // Return translation if exists, otherwise return original value

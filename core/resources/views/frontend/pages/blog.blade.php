@@ -28,13 +28,13 @@
                         </div>
 
                         <div class="p-sm-4 p-3">
-                            <h3><b>{{ $data->data->title }}</b></h3>
+                            <h3><b>{{ translate($data, 'title') }}</b></h3>
                             <ul class="blog-meta mb-4 mt-3">
                                 <li><i class="bi bi-calendar2-check"></i> {{ $data->created_at->diffforhumans() }}</li>
                                 <li><i class="bi bi-chat"></i> {{ $data->comment }} {{ __('comments') }}</li>
-                            </ul>   
+                            </ul>
 
-                            <?php echo clean($data->data->description); ?>
+                            <?php echo clean(translate($data, 'description')); ?>
                         </div>
 
                         <div class="blog-share-part">
@@ -105,11 +105,11 @@
                                         </div>
                                         <div class="side-blog-content">
                                             <h6 class="mb-0"><a
-                                                    href="{{ route('blog', [$item->id, Str::slug($item->data->title)]) }}">{{ $item->data->title }}</a>
+                                                    href="{{ route('blog', [$item->id, Str::slug(translate($item, 'title'))]) }}">{{ translate($item, 'title') }}</a>
                                             </h6>
                                             <ul class="blog-meta mt-1">
                                                 <li><i class="bi bi-calendar2-check"></i> {{ $data->created_at->diffforhumans() }}</li>
-                                            </ul> 
+                                            </ul>
                                         </div>
                                     </div>
                                 @empty

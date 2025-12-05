@@ -27,8 +27,8 @@ $elements = element('how_work.element');
             </div>
             <div class="content">
               <span class="work-number">{{$key < 10 ? "0" : "" }}{{$key+1}}</span>
-                  <h3 class="h4">{{__($element->data->title)}}</h3>
-                  <p class="mb-0">{{__($element->data->short_description)}}</p>
+                  <h3 class="h4">{{ translate($element, 'title') }}</h3>
+                  <p class="mb-0">{{ translate($element, 'short_description') }}</p>
             </div>
           </div>
         </div>

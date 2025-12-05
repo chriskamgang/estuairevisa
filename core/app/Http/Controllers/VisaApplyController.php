@@ -325,7 +325,7 @@ class VisaApplyController extends Controller
 
         return [
             'status' => true,
-            'plan_name' => $plan->title,
+            'plan_name' => $plan->getTranslatedTitle(),
             'plan_price' => number_format($plan->price, 2),
             'plan_id' => $plan->id,
             'message' => 'Plan changes successfully'

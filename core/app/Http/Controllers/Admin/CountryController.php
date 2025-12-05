@@ -23,10 +23,18 @@ class CountryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'required|mimes:jpg,png,jpeg',
             'status' => 'required|in:0,1',
-            'is_slider' => 'required|in:0,1'
+            'is_slider' => 'required|in:0,1',
+            'name_translations' => 'nullable|array',
         ]);
 
         $data['image'] = uploadImage($request->image, filePath('country'));
+
+        // Add English translation
+        $data['name_translations'] = array_merge(
+            $request->name_translations ?? [],
+            ['en' => $request->name]
+        );
+
         Country::create($data);
 
         return redirect()->route('admin.country.index')->with('success', 'Country created successfully.');
@@ -38,7 +46,8 @@ class CountryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'sometimes|file|mimes:jpg,png,jpeg',
             'status' => 'required|in:0,1',
-            'is_slider' => 'required|in:0,1'
+            'is_slider' => 'required|in:0,1',
+            'name_translations' => 'nullable|array',
         ]);
 
         $country = Country::findOrFail($id);
@@ -46,6 +55,12 @@ class CountryController extends Controller
             $data['image'] = uploadImage($request->image, filePath('country'),old:$country->image);
         }
 
+        // Merge with existing translations and add English
+        $data['name_translations'] = array_merge(
+            $country->name_translations ?? [],
+            $request->name_translations ?? [],
+            ['en' => $request->name]
+        );
 
         $country->update($data);
 

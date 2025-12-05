@@ -28,7 +28,7 @@ class Plan extends Model
      */
     public function getTranslatedTitle()
     {
-        $locale = session('lang', 'en');
+        $locale = session('locale', 'en');
         return $this->title_translations[$locale] ?? $this->title;
     }
 
@@ -37,7 +37,7 @@ class Plan extends Model
      */
     public function getTranslatedHeading()
     {
-        $locale = session('lang', 'en');
+        $locale = session('locale', 'en');
         return $this->heading_translations[$locale] ?? $this->heading;
     }
 
@@ -46,7 +46,7 @@ class Plan extends Model
      */
     public function getTranslatedShortDescription()
     {
-        $locale = session('lang', 'en');
+        $locale = session('locale', 'en');
         return $this->short_description_translations[$locale] ?? $this->short_description;
     }
 }

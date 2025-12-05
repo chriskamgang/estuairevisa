@@ -25,7 +25,7 @@
                     <div id="details-wrapper">
         
                         <div class="d-flex flex-wrap align-items-center gap-2 justify-content-sm-between justify-content-center mb-sm-5 mb-4">
-                            <p class="text-xl text-uppercase text-primary mb-0">{{ $plan->title }}</p>
+                            <p class="text-xl text-uppercase text-primary mb-0">{{ $plan->getTranslatedTitle() }}</p>
                             <p class="mb-0 d-flex align-items-center gap-2 justify-content-end">{{ __('Price') }}:
                             <b class="text-dark text-xl">{{ number_format($plan->price, 2).' '.$general->site_currency }}</b></p>
                         </div>
@@ -79,7 +79,7 @@
                                                     $country = \App\Models\Country::find($countryId);
                                                 @endphp
                                                 @if($country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                    <option value="{{ $country->id }}">{{ $country->getTranslatedName() }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
