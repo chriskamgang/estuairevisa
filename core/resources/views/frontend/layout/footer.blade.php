@@ -32,7 +32,7 @@ $footersociallink = element('footer.element');
           <a href="{{route('home')}}">
             <img src="{{ getFile('logo', $general->logo) }}" class="nir-footer-logo" alt="logo">
           </a>
-          <p class="mt-4 mb-0">{{ __(@$contentlink->data->footer_short_description) }}</p>
+          <p class="mt-4 mb-0">{{ translate($contentlink, 'footer_short_description') }}</p>
           <ul class="d-flex flex-wrap align-items-center gap-3 mt-3">
             @forelse (@$footersociallink as $item)
             <li>

@@ -92,7 +92,7 @@
     "footer": {
         "no_selection": true,
         "content": {
-            "footer_short_description": "text"
+            "footer_short_description": "textarea"
         },
         "element": {
             "social_link": "text",

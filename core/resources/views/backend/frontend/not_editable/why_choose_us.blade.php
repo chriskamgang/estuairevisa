@@ -10,14 +10,14 @@
         <div class="col-xl-6 col-lg-12 col-md-6">
             <div class="choose-item">
                 <div class="choose-item-title">
-                    <h5><span>{{ $k + 1 }}</span> {{ __($element->data->card_title) }}</h5>
+                    <h5><span>{{ $k + 1 }}</span> {{ translate($element, 'card_title') }}</h5>
                 </div>
                 <div class="choose-item-content">
                     <div class="icon">
                         <i class="{{ $element->data->card_icon }}"></i>
                     </div>
                     <div class="choose-item-details">
-                        <p class="mb-0">{{ __($element->data->card_description) }}</p>
+                        <p class="mb-0">{{ translate($element, 'card_description') }}</p>
                     </div>
                 </div>
             </div>

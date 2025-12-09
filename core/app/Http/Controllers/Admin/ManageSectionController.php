@@ -89,13 +89,28 @@ class ManageSectionController extends Controller
             }
         }
 
+        // Prepare translations
+        $translations = array_merge(
+            $content->translations ?? [],
+            $request->translations ?? []
+        );
+
+        // Add English to translations
+        foreach ($data as $key => $value) {
+            if (!in_array($key, ['image', 'backgroundimage']) && !is_array($value)) {
+                $translations['en'][$key] = $value;
+            }
+        }
+
         if (!$content) {
             SectionData::create([
                 'key' => "$request->name.content",
-                'data' => $data
+                'data' => $data,
+                'translations' => $translations
             ]);
         } else {
             $content->data = $data;
+            $content->translations = $translations;
 
             $content->save();
         }

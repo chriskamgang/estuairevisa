@@ -33,7 +33,7 @@ $elements = element('visa_info.element')
                 <div class="form-check style-check">
                     <input class="form-check-input" type="checkbox" name="file_condition_check[]" id="terms-{{$k}}">
                     <label class="form-check-label text-sm" for="terms-{{$k}}">
-                        {{__($element->data->agreement_short_description)}} <a
+                        {{ translate($element, 'agreement_short_description') }} <a
                             href="{{route('pages',$element->data->agreement_page_slug)}}" target="_blank">{{__("know
                             more")}}</a>
                     </label>

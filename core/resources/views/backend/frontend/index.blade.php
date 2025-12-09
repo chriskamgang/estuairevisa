@@ -12,7 +12,26 @@
                     <form method="post" action="" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
-                            <div class="row">
+
+                            <!-- Translation Tabs -->
+                            <ul class="nav nav-pills mb-4" id="contentTranslationTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="content-en-tab" data-toggle="pill" href="#content-en" role="tab">
+                                        <i class="fas fa-flag-usa"></i> English
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="content-fr-tab" data-toggle="pill" href="#content-fr" role="tab">
+                                        <i class="fas fa-flag"></i> Français
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="contentTranslationTabContent">
+                                <!-- English Tab -->
+                                <div class="tab-pane fade show active" id="content-en" role="tabpanel">
+                                    <h5 class="mb-3">{{ __('English Content') }}</h5>
+                                    <div class="row">
 
                                 @foreach ($section['content'] as $key => $sec)
                                     @if ($sec == 'text')
@@ -65,10 +84,41 @@
                                     @endif
                                 @endforeach
 
+                                    </div>
+                                </div>
+
+                                <!-- French Tab -->
+                                <div class="tab-pane fade" id="content-fr" role="tabpanel">
+                                    <h5 class="mb-3">{{ __('French Translation') }}</h5>
+                                    <div class="row">
+
+                                @foreach ($section['content'] as $key => $sec)
+                                    @if ($sec == 'text')
+                                        <div class="form-group col-md-6">
+                                            <label for="">{{ __(frontendFormatter($key)) }} (FR)</label>
+                                            <input type="text" name="translations[fr][{{ $key }}]"
+                                                value="{{ $content->translations['fr'][$key] ?? '' }}" class="form-control">
+                                        </div>
+                                    @elseif($sec == 'textarea')
+                                        <div class="form-group col-md-12">
+                                            <label for="">{{ __(frontendFormatter($key)) }} (FR)</label>
+                                            <textarea name="translations[fr][{{ $key }}]" class="form-control">{{ $content->translations['fr'][$key] ?? '' }}</textarea>
+                                        </div>
+                                    @elseif($sec == 'textarea_nic')
+                                        <div class="form-group col-md-12">
+                                            <label for="">{{ __(frontendFormatter($key)) }} (FR)</label>
+                                            <textarea name="translations[fr][{{ $key }}]" class="form-control summernote-fr">{{ $content->translations['fr'][$key] ?? '' }}</textarea>
+                                        </div>
+                                    @endif
+                                @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
                                 <div class="form-group col-md-12">
-
                                     <button type="submit" class="btn btn-primary float-right">{{ __('Update') }}</button>
-
                                 </div>
                             </div>
                         </div>
@@ -217,7 +267,7 @@
     <script>
         $(function() {
             'use strict'
-            $('.summernote').summernote();
+            $('.summernote, .summernote-fr').summernote();
 
 
             $("#myInput").on("keyup", function() {
